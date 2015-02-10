@@ -12,11 +12,31 @@ class MapLoader() :
 
                 if List[i][j] == 1 :
                     rect = [j*16,i*16]
-                    wall_sprite.add(WallBloc(rect))
+                    #ajouter block de couleur
 
                 if List[i][j] == 2 :
                     rect = [j*16,i*16]
-                    caracter_sprite.add(Caracter(rect))
+                    #ajouter block de couleur
+
+                if List[i][j] == 3 :
+                    rect = [j*16,i*16]
+                    #ajouter block de couleur
+
+                if List[i][j] == 4 :
+                    rect = [j*16,i*16]
+                    #ajouter block de couleur
+
+                if List[i][j] == 5 :
+                    rect = [j*16,i*16]
+                    #ajouter block de couleur
+
+                if List[i][j] == 6 :
+                    rect = [j*16,i*16]
+                    #ajouter block de couleur
+
+                if List[i][j] == 6 :
+                    rect = [j*16,i*16]
+                    #ajouter block de couleur
 
         maMap[1] = wall_sprite
         maMap[2] = caracter_sprite
