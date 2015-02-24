@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//src/client/Client.py=utf-8
+encoding//src/client/mapLoader.py=utf-8
+encoding//src/serveur/ClientChannel.py=utf-8
+encoding//src/serveur/Serveur.py=utf-8
+encoding//src/serveur/main.py=utf-8

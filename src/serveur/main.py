@@ -1,6 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
 import sys
-import os
+from Serveur import MyServer
 import time
+import os
 import imp
 forme = imp.load_source('Forme', '../classes/forme.py')
 joueur = imp.load_source('Joueur', '../classes/joueur.py')
@@ -128,46 +131,13 @@ Block_L2=      { 0 : {0 : [ 7, 7],
 
                  3 : {0 : [ 7, 7, 7],
                       1 : [-1,-1, 7]}}
-class ClientChannel(Channel):
 
-    def __init__(self, *args, **kwargs):
-        Channel.__init__(self, *args, **kwargs)
-        self.joueur = joueur.Joueur
+def main_prog():
+    my_server = MyServer(localaddr = (sys.argv[1],int(sys.argv[2])))
+    while True:
+        my_server.Pump()
+        time.sleep(0.01)
 
-    def Close(self):
-        self._server.del_client(self)
-
-    def Network_keys(self,data):
-        touches = data['keystrokes']
-        if(touches[K_LEFT]):
-            pass
-        if(touches[K_RIGHT]):
-            pass
-        if(touches[K_UP]):
-            pass
-        if(touches[K_DOWN]):
-            pass
-
-    def update():
-        sefl.send({"""todo"""});
-
-class MyServer(Server):
-
-    channelClass = ClientChannel
-
-    def __init__(self, *args, **kwargs):
-        Server.__init__(self, *args, **kwargs)
-        self.clients = []
-        self.run = False
-        print('Server launched')
-
-    def Connected(self, channel, addr):
-        self.clients.append(channel)
-        channel.number = len(self.clients)
-        print('New connection: %d client(s) connected' % len(self.clients))
-        if len(self.clients) == 1:
-            self.run = True
-
-    def update_all(self):
-        for client in self.clients:
-            client.update()
+if __name__ == '__main__':
+    main_prog()
+    sys.exit(0)
