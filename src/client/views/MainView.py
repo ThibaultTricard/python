@@ -6,27 +6,29 @@ from pygame.locals import *
 import sys
 import imp
 sys.path.append('/src/client/views/LoadImage')
-from LoadImage import LoadImage
 from Accueil import Accueil
 
-LARGEUR_FENETRE=800
-LONGUEUR_FENETRE=600
+"""
+Cette classe est une fenetre de base. Le contenu est mis
+quand on fait appel à setFenetre()
+"""
 class MainView():
     def __init__(self):
         pygame.init()
-    
+
+    """
+    Permet de changer le contenu de la fenetre principale
+    """
     def setFenetre(self,fenetre):
         self.fenetre=fenetre
-        
-        
-        
-       # while 1:
-           # for event in pygame.event.get():   #On parcours la liste de tous les événements reçus
-             #   if event.type == QUIT:     #Si un de ces événements est de type QUIT
-              #      sys.exit(0)
-                    
-            #self.fenetre.blit()
-            #pygame.display.flip()       
+    
+    def getFenetre(self):
+        return self.fenetre    
+    """
+    Vire la fenetre courante afin d'être remplacée par une autre par la suite
+    """
+    def desinitFenetre(self):
+        self.fenetre=None  
     
    
     

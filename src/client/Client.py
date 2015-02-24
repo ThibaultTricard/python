@@ -4,6 +4,7 @@
 import sys
 from PodSixNet.Connection import connection, ConnectionListener
 import thread
+from views.SaisiePseudo import SaisiePseudo
 
 # This example uses Python threads to manage async input from sys.stdin.
 # This is so that I can receive input from the console whilst running the server.
@@ -46,14 +47,38 @@ class Client(ConnectionListener):
     def Network_deconnexion(self,data):
         print "deconnexion"
         connection.close()
-        sys.exit()      
-
+        sys.exit() 
+    
+    """
+    Permet au serveur de demander une nouvelle partie : le serveur doit alors 
+    vérifier qu'il y'a encore des places disponibles afin de générer ou non
+    l'écran de login
+    """
+    def demanderNouvellePartie(self):
+        print "Demande nouvelle partie"
+        connection.Send({"action":"demandeConnexion"})
+    
+    """
+    Le serveur a confirmé qu'il y'avait de la place
+    Le client va pouvoir saisir son pseudo
+    """
+    def Network_confirmationConnexion(self,data):
+        saisiePseudo=SaisiePseudo()
+        print "desinitFenetre"
+        self.mainView.desinitFenetre()
+        print "setFenetre"
+        self.mainView.setFenetre(saisiePseudo.afficherSaisiePseudo())
+        
     def Input_loop(self):
         while True:
+            #envoyer les commandes saisies
             message=raw_input(">")
             connection.Send({"action":"message","message":message})
            
     def Network_disconnected(self, data):
         print 'Server disconnected'
         sys.exit()
+        
+    def setMainView(self,mainView):
+        self.mainView=mainView
 
