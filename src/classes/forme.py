@@ -6,12 +6,12 @@ class Forme():
         self.form = form
 
     def gauche(self):
-        if (pos1[0] > 0):
+        if (self.pos1[0] > 0):
             self.pos1[0] = self.pos1[0] - 1
             self.pos2[0] = self.pos2[0] - 1
 
     def droite(self):
-        if (pos1[0] < 10):
+        if (self.pos1[0] < 10):
             self.pos1[0] = self.pos1[0] + 1
             self.pos2[0] = self.pos2[0] + 1
 

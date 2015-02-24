@@ -1,9 +1,14 @@
 import sys
 import time
 from Client import Client
+sys.path.append('/src/client/views/MainView')
+from views.MainView import MainView
 
 def main_prog():
     if len(sys.argv) != 3:
+        main=MainView()
+        main.setBackground("../../image/tetris.jpg")
+        main.afficherFenetre()
         print "Usage:", sys.argv[0], "host port"
     else:
         c = Client(sys.argv[1], int(sys.argv[2]))

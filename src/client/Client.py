@@ -2,8 +2,6 @@
 # coding: utf-8
 
 import sys
-import time
-import os
 from PodSixNet.Connection import connection, ConnectionListener
 import thread
 
