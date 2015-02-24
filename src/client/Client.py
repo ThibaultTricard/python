@@ -23,8 +23,6 @@ class bcolors():
 class Client(ConnectionListener):
     def __init__(self, host, port):
         self.Connect((host, port))
-        username=raw_input("Entrez votre pseudo :")
-        connection.Send({"action":"username","username":username})
         t=thread.start_new_thread(self.Input_loop,())
     
     def Loop(self):

@@ -7,29 +7,26 @@ import sys
 import imp
 sys.path.append('/src/client/views/LoadImage')
 from LoadImage import LoadImage
+from Accueil import Accueil
 
 LARGEUR_FENETRE=800
 LONGUEUR_FENETRE=600
-class MainView(pygame.display):
+class MainView():
     def __init__(self):
         pygame.init()
-        self.image=""
+    
+    def setFenetre(self,fenetre):
+        self.fenetre=fenetre
         
-    def setBackground(self,cheminBackgroundImage):
-        self.image = cheminBackgroundImage
-        print self.image
         
-    def afficherFenetre(self):
-        fenetre=pygame.display.set_mode((LARGEUR_FENETRE,LONGUEUR_FENETRE))
-        self.image = pygame.image.load(self.image).convert()
-        fenetre.blit(self.image, (0,0))
-        pygame.display.flip()
-        while 1:
-            for event in pygame.event.get():   #On parcours la liste de tous les événements reçus
-                if event.type == QUIT:     #Si un de ces événements est de type QUIT
-                    sys.exit(0)  
-            fenetre.blit(self.image, (0,0))
-            pygame.display.flip()       
+        
+       # while 1:
+           # for event in pygame.event.get():   #On parcours la liste de tous les événements reçus
+             #   if event.type == QUIT:     #Si un de ces événements est de type QUIT
+              #      sys.exit(0)
+                    
+            #self.fenetre.blit()
+            #pygame.display.flip()       
     
    
     
