@@ -1,0 +1,1 @@
+Pour lancer le serveur, utiliser le main.py (python main.py 127.0.0.1 8888)
