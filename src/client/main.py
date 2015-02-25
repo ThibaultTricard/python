@@ -10,21 +10,21 @@ def main_prog():
         print "Usage:", sys.argv[0], "host port"
         sys.exit(0)
     else:
-        #Création du client
+        #Creation du client
         client = Client(sys.argv[1], int(sys.argv[2]))
-        #Création de la fenêtre principale
+        #Creation de la fenetre principale
         mainView=MainView()
         #permet au client de pouvoir modifier le contenu de la fenetre principale
         client.setMainView(mainView)
-        #on crée la page d'accueil
+        #on cree la page d'accueil
         pageAccueil=Accueil()
         pageAccueil.getAccueilController().setClient(client)
         mainView.setFenetre(pageAccueil.afficherAccueil())
-        #le client reste à l'écoute
+        #le client reste a l'ecoute
         while True:
             client.Loop()
             time.sleep(0.001)
-            
+
 if __name__ == '__main__':
     main_prog()
     sys.exit(0)

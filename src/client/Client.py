@@ -25,14 +25,14 @@ class Client(ConnectionListener):
     def __init__(self, host, port):
         self.Connect((host, port))
         t=thread.start_new_thread(self.Input_loop,())
-    
+
     def Loop(self):
         connection.Pump()
         self.Pump()
-    
+
     def Network(self, data):
         print('message de type %s recu' % data['action'])
-    
+
     ### Network event/message callbacks ###
     def Network_connected(self, data):
         print('connecte au serveur !')
@@ -47,17 +47,17 @@ class Client(ConnectionListener):
     def Network_deconnexion(self,data):
         print "deconnexion"
         connection.close()
-        sys.exit() 
-    
+        sys.exit()
+
     """
-    Permet au serveur de demander une nouvelle partie : le serveur doit alors 
+    Permet au serveur de demander une nouvelle partie : le serveur doit alors
     vérifier qu'il y'a encore des places disponibles afin de générer ou non
     l'écran de login
     """
     def demanderNouvellePartie(self):
         print "Demande nouvelle partie"
         connection.Send({"action":"demandeConnexion"})
-    
+
     """
     Le serveur a confirmé qu'il y'avait de la place
     Le client va pouvoir saisir son pseudo
@@ -68,17 +68,16 @@ class Client(ConnectionListener):
         self.mainView.desinitFenetre()
         print "setFenetre"
         self.mainView.setFenetre(saisiePseudo.afficherSaisiePseudo())
-        
+
     def Input_loop(self):
         while True:
             #envoyer les commandes saisies
             message=raw_input(">")
             connection.Send({"action":"message","message":message})
-           
+
     def Network_disconnected(self, data):
         print 'Server disconnected'
         sys.exit()
-        
+
     def setMainView(self,mainView):
         self.mainView=mainView
-
