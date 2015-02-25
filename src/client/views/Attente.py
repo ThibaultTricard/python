@@ -3,24 +3,31 @@ from pygame.locals import *
 import sys
 sys.path.append('/src/client/controller/AttenteController')
 from controller.AttenteController import AttenteController
+
+LARGEUR_FENETRE=int(800)
+HAUTEUR_FENETRE=int(600)
+
 class Attente():
     def __init__(self):
-        self.AttenteController=AttenteController(self)
+        self.attenteController=AttenteController(self)
 
-    def afficherSaisiePseudo(self):
+    def ecranAttente(self):
         self.surface=pygame.display.set_mode((LARGEUR_FENETRE,HAUTEUR_FENETRE))
         self.changementPage=False
         pygame.display.flip()
-        chaine="ma chaine sur une seule ligne"
+        chaine="en attente d'autres joueur"
         font=pygame.font.SysFont("broadway",24,bold=False,italic=False)
-        text=font.render(chaine,1,(R,G,B))
-        surface.blit(text,(30,30))
-        surface.display.flip()
+        self.text=font.render(chaine,1,(255,255,255))
+        self.surface.blit(self.text,(30,30))
+        pygame.display.flip()
         self.loop()
 
     def loop(self):
         while self.changementPage==False:
-            pass
+            pygame.time.Clock().tick(60)
+            self.surface.blit(self.text,(30,30))
+            pygame.display.flip()
+
 
     def changementPage(self):
         self.changementPage=True

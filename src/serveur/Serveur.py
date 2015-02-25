@@ -20,7 +20,3 @@ class MyServer(Server):
     def del_client(self,channel):
         print('client deconnecte')
         self.clients.remove(channel)
-
-    def joueurPret():
-        for client in self.clients :
-            client.ready()

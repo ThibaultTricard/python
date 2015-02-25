@@ -67,7 +67,13 @@ class Client(ConnectionListener):
     def AttendrePartie(self, pseudo):
         print "envoi du pseudo : " +pseudo
         connection.Send({"action":"username", "username":pseudo})
-        wait = Attente()
+        attente = Attente()
+        attente.attenteController.setClient(self)
+        self.mainView.desinitFenetre()
+        self.mainView.setFenetre(attente.ecranAttente())
+
+    def Network_ready(self,data):
+        pass
 
     def Network_confirmationConnexion(self,data):
         saisiePseudo=SaisiePseudo()

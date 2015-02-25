@@ -18,7 +18,8 @@ class ClientChannel(Channel):
 
     def Network_username(self,data):
         print('username recu : %s ' % data['username'])
-        self._serveur.joueurPret()
+        for client in self._server.clients:
+            client.Send({"action":"ready"})
 
     def Network_message(self,data):
         print data['message']
@@ -32,6 +33,3 @@ class ClientChannel(Channel):
     """
     def Network_demandeConnexion(self,data):
         self.Send({"action":"confirmationConnexion"})
-        
-    def ready() :
-        connection.Send({"action":"ready"})
