@@ -5,6 +5,7 @@ import sys
 from PodSixNet.Connection import connection, ConnectionListener
 import thread
 from views.SaisiePseudo import SaisiePseudo
+from views.Attente import Attente
 
 # This example uses Python threads to manage async input from sys.stdin.
 # This is so that I can receive input from the console whilst running the server.
@@ -66,13 +67,12 @@ class Client(ConnectionListener):
     def AttendrePartie(self, pseudo):
         print "envoi du pseudo : " +pseudo
         connection.Send({"action":"username", "username":pseudo})
+        wait = Attente()
 
     def Network_confirmationConnexion(self,data):
         saisiePseudo=SaisiePseudo()
         saisiePseudo.saisiePseudoController.setClient(self)
-        print "desinitFenetre"
         self.mainView.desinitFenetre()
-        print "setFenetre"
         self.mainView.setFenetre(saisiePseudo.afficherSaisiePseudo())
 
     def Input_loop(self):

@@ -17,14 +17,15 @@ class ClientChannel(Channel):
         print('message de type %s recu' % data['action'])
 
     def Network_username(self,data):
-        print('username reçu : %s ' % data['username'])
+        print('username recu : %s ' % data['username'])
+        self._serveur.joueurPret()
 
     def Network_message(self,data):
         print data['message']
         for client in self._server.clients:
             if client!=self:
                 client.Send({"action":"message","message":data['message']})
-    
+
     """
     suite à la demande de connexion du client, le serveur confirme la connexion
     Il y'a des tests à faire mais là jsuis fatigué il est minuit 53
@@ -32,3 +33,5 @@ class ClientChannel(Channel):
     def Network_demandeConnexion(self,data):
         self.Send({"action":"confirmationConnexion"})
         
+    def ready() :
+        connection.Send({"action":"ready"})
