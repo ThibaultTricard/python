@@ -62,8 +62,14 @@ class Client(ConnectionListener):
     Le serveur a confirmé qu'il y'avait de la place
     Le client va pouvoir saisir son pseudo
     """
+
+    def AttendrePartie(self, pseudo):
+        print "envoi du pseudo : " +pseudo
+        connection.Send({"action":"username", "username":pseudo})
+
     def Network_confirmationConnexion(self,data):
         saisiePseudo=SaisiePseudo()
+        saisiePseudo.saisiePseudoController.setClient(self)
         print "desinitFenetre"
         self.mainView.desinitFenetre()
         print "setFenetre"

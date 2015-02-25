@@ -42,9 +42,11 @@ class SaisiePseudo:
                     print "Click"
                 if event.type == QUIT:
                     sys.exit(0)
-            # update txtbx
+            keys=pygame.key.get_pressed()
+            if keys[K_RETURN]:
+                self.saisiePseudoController.envoyerPseudo(self.inputNom.value)
+                self.changementPage=True
             self.inputNom.update(events)
-            # blit txtbx on the sceen
             self.inputNom.draw(self.surface)
             pygame.display.flip()
 
