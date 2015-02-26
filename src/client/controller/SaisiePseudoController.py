@@ -11,4 +11,5 @@ class SaisiePseudoController:
         return self.client
 
     def envoyerPseudo(self, pseudo):
+        print "Attendre partie"
         self.client.AttendrePartie(pseudo)

@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 import sys
 sys.path.append('/src/client/controller/AttenteController')
-from controller.AttenteController import AttenteController
+from controller.AttenteController import AttenteController  # @UnresolvedImport
 
 LARGEUR_FENETRE=int(800)
 HAUTEUR_FENETRE=int(600)

@@ -25,7 +25,7 @@ class bcolors():
 class Client(ConnectionListener):
     def __init__(self, host, port):
         self.Connect((host, port))
-        t=thread.start_new_thread(self.Input_loop,())
+     #   t=thread.start_new_thread(self.Input_loop,())
 
     def Loop(self):
         connection.Pump()
