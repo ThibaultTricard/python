@@ -1,2 +1,13 @@
-Ce dossier est fait pour tester vos code avant qu'il marche tout ce qui est dans
-ce dossier ne sera pas commit.
+to do :
+
+  coté client :
+    -mapLoader.py
+    -jeu.py
+    -client.py fonction key
+
+  coté serveur :
+    -calcule colision
+    -reception du message key
+    -traitement
+    -temporiser le serveur
+    
