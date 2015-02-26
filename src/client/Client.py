@@ -70,7 +70,7 @@ class Client(ConnectionListener):
         self.attente = Attente()
         self.attente.attenteController.setClient(self)
         self.mainView.desinitFenetre()
-        self.mainView.setFenetre(attente.ecranAttente())
+        self.mainView.setFenetre(self.attente.ecranAttente())
 
     def Network_ready(self,data):
         print "ready"
