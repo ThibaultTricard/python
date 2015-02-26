@@ -67,8 +67,8 @@ class Client(ConnectionListener):
     def AttendrePartie(self, pseudo):
         print "envoi du pseudo : " +pseudo
         connection.Send({"action":"username", "username":pseudo})
-        attente = Attente()
-        attente.attenteController.setClient(self)
+        self.attente = Attente()
+        self.attente.attenteController.setClient(self)
         self.mainView.desinitFenetre()
         self.mainView.setFenetre(attente.ecranAttente())
 
