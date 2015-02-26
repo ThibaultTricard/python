@@ -20,9 +20,10 @@ class bcolors():
 
 
 class Client(ConnectionListener):
-    def __init__(self, host, port, pseudo):
+    def __init__(self, host, port, pseudo, jeu):
         self.Connect((host, port))
         self.pseudo = pseudo
+        self.jeu=jeu 
         t=thread.start_new_thread(self.Input_loop,())
 
     def Loop(self):
