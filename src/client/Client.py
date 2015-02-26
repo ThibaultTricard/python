@@ -73,7 +73,7 @@ class Client(ConnectionListener):
         self.mainView.setFenetre(attente.ecranAttente())
 
     def Network_ready(self,data):
-        pass
+        print "ready"
 
     def Network_confirmationConnexion(self,data):
         saisiePseudo=SaisiePseudo()
