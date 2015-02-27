@@ -35,9 +35,13 @@ class ClientChannel(Channel):
         touches = data['keystrokes']
         if(touches[K_LEFT]):
             current_forme.gauche()
+            console.log("left")
         if(touches[K_RIGHT]):
             current_forme.droite()
+            console.log("right")
         if(touches[K_DOWN]):
             current_forme.bas()
+            console.log("down")
         if(touches[K_SPACE]):
             current_forme.rotate()
+            console.log("rotate")
