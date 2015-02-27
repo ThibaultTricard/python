@@ -3,6 +3,7 @@ import time
 from classes import client
 from classes import mapLoader
 from classes import forme
+from classes import block
 import pygame
 from pygame.locals import *
 FORM_VIDE = forme.Forme([0,0],[0,0],{0:{},
@@ -20,6 +21,7 @@ class Jeu() :
         self.pseudo=pseudo
         self.forms = {0:FORM_VIDE,1:FORM_VIDE,2:FORM_VIDE,3:FORM_VIDE}
         self.groupeForm = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
+        self.groupeFormStockee = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
         self.begin = False
         self.carte = mapLoader.create()
         self.carte.draw(self.surface)
@@ -27,8 +29,10 @@ class Jeu() :
 
     def lancer(self):
         monClient = client.Client(self.ip, self.port, self.pseudo, self)
+        self.create(0,2)
         clock = pygame.time.Clock()
         pygame.key.set_repeat(1,1)
+
         while True:
             clock.tick(60)
             monClient.Loop()
@@ -40,14 +44,32 @@ class Jeu() :
             if self.begin :
                 if keystrokes[K_LEFT] or keystrokes[K_SPACE] or keystrokes[K_RIGHT] or keystrokes[K_DOWN]:
                     monClient.keys(keystrokes)
-        self.carte.draw(self.surface)
-        pygame.display.flip()
+
+            self.carte = mapLoader.update(self.forms[0],self.groupeForm[0],self.groupeFormStockee[0])
+            self.carte.draw(self.surface)
+            pygame.display.flip()
 
     def move(self,joueur,direction):
         pass
 
     def create(self,joueur,form):
-        pass
+        self.forms[joueur]=forme.Forme(5,5,form)
+        rect = [5*16+joueur*180 +50 ,0*16+150]
+        blockCreate=block.Block(rect)
+        blockCreate.changerImage('vert')
+        self.groupeForm[joueur].add(blockCreate)
+        rect = [5*16+joueur*180 +50 ,1*16+150]
+        blockCreate=block.Block(rect)
+        blockCreate.changerImage('vert')
+        self.groupeForm[joueur].add(blockCreate)
+        rect = [5*16+joueur*180 +50 ,2*16+150]
+        blockCreate=block.Block(rect)
+        blockCreate.changerImage('vert')
+        self.groupeForm[joueur].add(blockCreate)
+        rect = [5*16+joueur*180 +50 ,3*16+150]
+        blockCreate=block.Block(rect)
+        blockCreate.changerImage('vert')
+        self.groupeForm[joueur].add(blockCreate)
 
     def rotate(self,joueur):
         pass

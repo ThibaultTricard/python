@@ -11,3 +11,7 @@ class Block(pygame.sprite.Sprite):
         self.rect.x = rect[0]
         self.rect.y = rect[1]
         self.speed = [0,0]
+
+    def changerImage(self,color):
+        self.image = pygame.image.load('image/'+color+'.png')
+        self.image = pygame.transform.scale(self.image, (int(16), int(16)))
