@@ -5,7 +5,7 @@ from classes import mapLoader
 from classes import forme
 import pygame
 from pygame.locals import *
-FORM_VIDE : {0:{},
+FORM_VIDE = {0:{},
              1:{},
              2:{},
              3:{}}
