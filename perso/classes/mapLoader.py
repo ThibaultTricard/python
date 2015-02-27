@@ -8,7 +8,7 @@ def create() :
         for i in range(22) :
             for j in range(10):
                 rect = [j*16+k*180 +50 ,i*16+150]
-                maMap.add(block.Block(rect))
+                maMap.add(block.Block(rect,0))
     return maMap
 
 def update(forms,groupeForm,groupeFormStockee) :
@@ -25,6 +25,16 @@ def update(forms,groupeForm,groupeFormStockee) :
                         caseOccupe=True
                         maMap.add(sprite)
                 if caseOccupe==False:
-                    maMap.add(block.Block([x,y]))
+                    maMap.add(block.Block([x,y],0))
 
     return maMap
+
+def creer(form, joueur):
+    print form.form[form.formActuelle]
+    maForm = pygame.sprite.RenderClear()
+    for i in range(len(form.form[form.formActuelle])):
+        for j in range(len(form.form[form.formActuelle][i])):
+            if form.form[form.formActuelle][i][j] >=1 :
+                rect = [(j+form.pos1[1])*16+joueur*180 +50 ,(i+form.pos1[0])*16+150]
+                maForm.add(block.Block(rect,form.form[form.formActuelle][i][j]))
+    return maForm

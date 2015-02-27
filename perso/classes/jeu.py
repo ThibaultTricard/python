@@ -29,7 +29,16 @@ class Jeu() :
 
     def lancer(self):
         monClient = client.Client(self.ip, self.port, self.pseudo, self)
-        self.create(0,2)
+        self.create(0,{0 : { 0 : [0,2,0],
+                             1 : [2,2,2]},
+                       1 : { 0 : [0,2],
+                             1 : [2,2],
+                             2 : [0,2]},
+                       2 : { 0 : [2,2,2],
+                             1 : [0,2,0]},
+                       3 : { 0 : [2,0],
+                             1 : [2,2],
+                             2 : [2,0]}})
         clock = pygame.time.Clock()
         pygame.key.set_repeat(1,1)
 
@@ -45,31 +54,18 @@ class Jeu() :
                 if keystrokes[K_LEFT] or keystrokes[K_SPACE] or keystrokes[K_RIGHT] or keystrokes[K_DOWN]:
                     monClient.keys(keystrokes)
 
-            self.carte = mapLoader.update(self.forms[0],self.groupeForm[0],self.groupeFormStockee[0])
-            self.carte.draw(self.surface)
+
+            for g in self.groupeForm :
+                self.groupeForm[g].draw(self.surface)
             pygame.display.flip()
 
     def move(self,joueur,direction):
         pass
 
+
     def create(self,joueur,form):
-        self.forms[joueur]=forme.Forme(5,5,form)
-        rect = [5*16+joueur*180 +50 ,0*16+150]
-        blockCreate=block.Block(rect)
-        blockCreate.changerImage('vert')
-        self.groupeForm[joueur].add(blockCreate)
-        rect = [5*16+joueur*180 +50 ,1*16+150]
-        blockCreate=block.Block(rect)
-        blockCreate.changerImage('vert')
-        self.groupeForm[joueur].add(blockCreate)
-        rect = [5*16+joueur*180 +50 ,2*16+150]
-        blockCreate=block.Block(rect)
-        blockCreate.changerImage('vert')
-        self.groupeForm[joueur].add(blockCreate)
-        rect = [5*16+joueur*180 +50 ,3*16+150]
-        blockCreate=block.Block(rect)
-        blockCreate.changerImage('vert')
-        self.groupeForm[joueur].add(blockCreate)
+        self.forms[joueur] = forme.Forme([0,4],[0,0],form)
+        self.groupeForm[joueur] = mapLoader.creer(self.forms[joueur],joueur)
 
     def rotate(self,joueur):
         pass
