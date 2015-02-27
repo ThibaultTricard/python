@@ -18,8 +18,9 @@ Cordialement,
 DJ Chedriche
 """
 class SaisiePseudo:
-    def __init__(self):
+    def __init__(self,client):
         self.saisiePseudoController=SaisiePseudoController(self)
+        self.client=client
 
     def afficherSaisiePseudo(self):
         self.surface=pygame.display.set_mode((LARGEUR_FENETRE,HAUTEUR_FENETRE))
