@@ -41,18 +41,3 @@ class ClientChannel(Channel):
 
     def Close(self):
         self._server.del_client(self)
-
-    def Network_keys(self,data):
-        touches = data['keystrokes']
-        if(touches[K_LEFT]):
-            current_forme.gauche()
-            print("left")
-        if(touches[K_RIGHT]):
-            current_forme.droite()
-            print("right")
-        if(touches[K_DOWN]):
-            current_forme.bas()
-            print("down")
-        if(touches[K_SPACE]):
-            current_forme.rotate()
-            print("rotate")

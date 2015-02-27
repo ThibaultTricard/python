@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 from PodSixNet.Channel import Channel
+import pygame
+from pygame.locals import *
 
 Block_Ligne = {0 : { 0 : [1],
                      1 : [1],
@@ -95,14 +97,27 @@ class ClientChannel(Channel):
 
     def Network_username(self,data):
         print('username recu : %s ' % data['username'])
-        for client in self._server.clients:
-            client.Send({"action":"ready"})
 
     def Network_message(self,data):
         print data['message']
         for client in self._server.clients:
             if client!=self:
                 client.Send({"action":"message","message":data['message']})
+
+    def Network_keys(self,data):
+        touches = data['keystrokes']
+        if touches[K_LEFT]:
+            #current_forme.gauche()
+            print("left")
+        if touches[K_RIGHT]:
+            #current_forme.droite()
+            print("right")
+        if touches[K_DOWN]:
+            #current_forme.bas()
+            print("down")
+        if touches[K_SPACE]:
+            #current_forme.rotate()
+            print("rotate")
 
     """
     suite à la demande de connexion du client, le serveur confirme la connexion

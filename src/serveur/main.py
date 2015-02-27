@@ -15,6 +15,8 @@ def main_prog():
     my_server = MyServer(localaddr = (sys.argv[1],int(sys.argv[2])))
     while launched==False:
         if len(my_server.clients)==4 and launched==False:
+            for client in my_server.clients:
+                client.Send({"action":"ready"})
             launched = True
             my_server.launch_game()
         my_server.Pump()

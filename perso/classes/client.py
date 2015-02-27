@@ -54,9 +54,8 @@ class Client(ConnectionListener):
         print "Demande nouvelle partie"
         connection.Send({"action":"demandeConnexion"})
 
-
     def Network_ready(self,data):
-        print "ready"
+        self.jeu.commencer()
 
     def Input_loop(self):
         while True:

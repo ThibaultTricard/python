@@ -27,17 +27,19 @@ class Jeu() :
 
     def lancer(self):
         monClient = client.Client(self.ip, self.port, self.pseudo, self)
+        clock = pygame.time.Clock()
+        pygame.key.set_repeat(1,1)
         while True:
-            pygame.time.Clock().tick(60)
+            clock.tick(60)
             monClient.Loop()
 
             for event in pygame.event.get():
                 if event.type == QUIT:
                     sys.exit(0)
-            keys=pygame.key.get_pressed()
+            keystrokes = pygame.key.get_pressed()
             if self.begin :
-                if keys[K_LEFT] or keys[K_UP] or keys[K_RIGHT] or keys[K_DOWN]:
-                    monClient.key(keys)
+                if keystrokes[K_LEFT] or keystrokes[K_SPACE] or keystrokes[K_RIGHT] or keystrokes[K_DOWN]:
+                    monClient.keys(keystrokes)
         self.carte.draw(self.surface)
         pygame.display.flip()
 
