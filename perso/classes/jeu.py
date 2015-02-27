@@ -5,10 +5,10 @@ from classes import mapLoader
 from classes import forme
 import pygame
 from pygame.locals import *
-FORM_VIDE = {0:{},
+FORM_VIDE = forme.Forme([0,0],[0,0]{0:{},
              1:{},
              2:{},
-             3:{}}
+             3:{}})
 LARGEUR_FENETRE=int(800)
 HAUTEUR_FENETRE=int(600)
 
@@ -18,7 +18,7 @@ class Jeu() :
         self.ip=ip
         self.port=port
         self.pseudo=pseudo
-        self.form = {0:FORM_VIDE,1:FORM_VIDE,2:FORM_VIDE,3:FORM_VIDE}
+        self.forms = {0:FORM_VIDE,1:FORM_VIDE,2:FORM_VIDE,3:FORM_VIDE}
         self.groupeForm = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
         self.begin = False
         self.carte = mapLoader.create()
