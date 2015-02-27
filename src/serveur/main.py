@@ -11,8 +11,12 @@ carte = imp.load_source('Carte', '../classes/carte.py')
 
 
 def main_prog():
+    launched = False
     my_server = MyServer(localaddr = (sys.argv[1],int(sys.argv[2])))
-    while True:
+    while launched==False:
+        if len(my_server.clients)==4 and launched==False:
+            launched = True
+            my_server.launch_game()
         my_server.Pump()
         time.sleep(0.01)
 

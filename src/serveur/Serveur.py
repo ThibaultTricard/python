@@ -3,6 +3,7 @@
 from PodSixNet.Channel import Channel
 from PodSixNet.Server import Server
 from ClientChannel import ClientChannel
+import time
 
 #Héritage de la classe Server
 class MyServer(Server):
@@ -22,6 +23,16 @@ class MyServer(Server):
         print('client deconnecte')
         self.clients.remove(channel)
 
+
+    def launch_game(self):
+        # Init Pygame
+        print("game launched")
+        while True:
+            time.sleep(0.01)
+            self.Pump()
+
+
+
 class ClientChannel(Channel):
 
     def __init__(self, *args, **kwargs):
@@ -35,13 +46,13 @@ class ClientChannel(Channel):
         touches = data['keystrokes']
         if(touches[K_LEFT]):
             current_forme.gauche()
-            console.log("left")
+            print("left")
         if(touches[K_RIGHT]):
             current_forme.droite()
-            console.log("right")
+            print("right")
         if(touches[K_DOWN]):
             current_forme.bas()
-            console.log("down")
+            print("down")
         if(touches[K_SPACE]):
             current_forme.rotate()
-            console.log("rotate")
+            print("rotate")
