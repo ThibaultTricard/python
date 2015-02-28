@@ -29,7 +29,7 @@ def update(forms,groupeForm,groupeFormStockee) :
 
     return maMap
 
-def creer(form, joueur):
+def paint(form, joueur):
     print form.form[form.formActuelle]
     maForm = pygame.sprite.RenderClear()
     for i in range(len(form.form[form.formActuelle])):

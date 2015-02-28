@@ -64,8 +64,8 @@ class Jeu() :
 
 
     def create(self,joueur,form):
-        self.forms[joueur] = forme.Forme([0,4],[0,0],form)
-        self.groupeForm[joueur] = mapLoader.creer(self.forms[joueur],joueur)
+        self.forms[joueur] = forme.Forme([0,4],[4,4],form)
+        self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
 
     def rotate(self,joueur):
         pass
