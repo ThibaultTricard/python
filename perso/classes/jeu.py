@@ -53,7 +53,6 @@ class Jeu() :
             if self.begin :
                 if keystrokes[K_LEFT] or keystrokes[K_SPACE] or keystrokes[K_RIGHT] or keystrokes[K_DOWN]:
                     monClient.keys(keystrokes)
-                    self.move(0,"droite")
 
             self.carte.draw(self.surface)
             for g in self.groupeForm :

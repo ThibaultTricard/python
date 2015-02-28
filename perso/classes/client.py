@@ -72,3 +72,7 @@ class Client(ConnectionListener):
     #Envoie les touches pressees au serveur
     def keys(self,data):
         connection.Send({'action':'keys','keystrokes':data})
+
+    def Network_move(self, data):
+        print 'Mouvement'
+        self.jeu.move(data['message']['Joueur'],data['message']['Direction'])

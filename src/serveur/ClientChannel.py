@@ -108,12 +108,21 @@ class ClientChannel(Channel):
         touches = data['keystrokes']
         if touches[K_LEFT]:
             #current_forme.gauche()
+            for client in self._server.clients:
+                if client==self:
+                    client.Send({"action":"move","message":{"Joueur":0,"Direction":"gauche"}})
             print("left")
         if touches[K_RIGHT]:
             #current_forme.droite()
+            for client in self._server.clients:
+                if client==self:
+                    client.Send({"action":"move","message":{"Joueur":0,"Direction":"droite"}})
             print("right")
         if touches[K_DOWN]:
             #current_forme.bas()
+            for client in self._server.clients:
+                if client==self:
+                    client.Send({"action":"move","message":{"Joueur":0,"Direction":"bas"}})
             print("down")
         if touches[K_SPACE]:
             #current_forme.rotate()
