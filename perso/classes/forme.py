@@ -7,18 +7,19 @@ class Forme():
         self.formActuelle = 0
 
     def gauche(self):
-        if (self.pos1[0] > 0):
-            self.pos1[0] = self.pos1[0] - 1
-            self.pos2[0] = self.pos2[0] - 1
+        if (self.pos1[1] > 0):
+            self.pos1[1] = self.pos1[1] - 1
+            self.pos2[1] = self.pos2[1] - 1
 
     def droite(self):
-        if (self.pos1[0] < 10):
-            self.pos1[0] = self.pos1[0] + 1
-            self.pos2[0] = self.pos2[0] + 1
+        if (self.pos1[1] < 10):
+            self.pos1[1] = self.pos1[1] + 1
+            self.pos2[1] = self.pos2[1] + 1
 
     def bas(self):
-        self.pos1[1] = self.pos1[1] + 1
-        self.pos2[1] = self.pos2[1] + 1
+        if self.pos2[0] < 22:
+            self.pos1[0] = self.pos1[0] + 1
+            self.pos2[0] = self.pos2[0] + 1
 
     def tourner(self):
         if self.formActuelle == 3 :

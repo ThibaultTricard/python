@@ -12,7 +12,6 @@ def create() :
     return maMap
 
 def update(forms,groupeForm,groupeFormStockee) :
-    print "test1"
     maMap = pygame.sprite.RenderClear()
     for k in range(4) :
         for i in range(22) :
