@@ -69,6 +69,6 @@ class Client(ConnectionListener):
 
     def setMainView(self,mainView):
         self.mainView=mainView
-
+    #Envoie les touches pressees au serveur
     def keys(self,data):
         connection.Send({'action':'keys','keystrokes':data})

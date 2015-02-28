@@ -1,4 +1,7 @@
 eclipse.preferences.version=1
+encoding//perso/classes/accueil.py=utf-8
+encoding//perso/classes/client.py=utf-8
+encoding//perso/main.py=utf-8
 encoding//src/client/Client.py=utf-8
 encoding//src/client/controller/SaisiePseudoController.py=utf-8
 encoding//src/client/mapLoader.py=utf-8

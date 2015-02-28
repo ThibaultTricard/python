@@ -124,4 +124,7 @@ class ClientChannel(Channel):
     Il y'a des tests à faire mais là jsuis fatigué il est minuit 53
     """
     def Network_demandeConnexion(self,data):
-        self.Send({"action":"confirmationConnexion"})
+        if len(self._server.clients)<=4:
+            self.Send({"action":"confirmationConnexion"})
+        else:
+            print "Désolé plus de place !"
