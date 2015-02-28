@@ -19,7 +19,7 @@ class Jeu() :
         self.ip=ip
         self.port=port
         self.pseudo=pseudo
-        #formes des joueurs 0,1,2,3 
+        #formes des joueurs 0,1,2,3
         self.forms = {0:FORM_VIDE,1:FORM_VIDE,2:FORM_VIDE,3:FORM_VIDE}
         self.groupeForm = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
         self.groupeFormStockee = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
@@ -72,17 +72,23 @@ class Jeu() :
                              2 : [2,0]}})
         clock = pygame.time.Clock()
         #pygame.key.set_repeat(1,1)
-
+        cd = 0
         while True:
             clock.tick(60)
             monClient.Loop()
-
+            if cd > 0 :
+                cd = cd -1
             for event in pygame.event.get():
                 if event.type == QUIT:
                     sys.exit(0)
             keystrokes = pygame.key.get_pressed()
             if self.begin :
-                if keystrokes[K_LEFT] or keystrokes[K_SPACE] or keystrokes[K_RIGHT] or keystrokes[K_DOWN]:
+                if keystrokes[K_LEFT]or keystrokes[K_SPACE] or keystrokes[K_RIGHT]:
+                    if cd == 0 :
+                        monClient.keys(keystrokes)
+                        cd = 10
+
+                if keystrokes[K_DOWN] :
                     monClient.keys(keystrokes)
 
             self.carte.draw(self.surface)
@@ -109,7 +115,7 @@ class Jeu() :
     def rotate(self,joueur):
         self.forms[joueur].tourner()
         self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
-        
+
 
     def refresh(self,joueur, map) :
         pass
