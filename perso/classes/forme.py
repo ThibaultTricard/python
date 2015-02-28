@@ -12,7 +12,7 @@ class Forme():
             self.pos2[1] = self.pos2[1] - 1
 
     def droite(self):
-        if (self.pos1[1] < 10):
+        if (self.pos2[1] < 10):
             self.pos1[1] = self.pos1[1] + 1
             self.pos2[1] = self.pos2[1] + 1
 

@@ -53,7 +53,7 @@ class Jeu() :
             if self.begin :
                 if keystrokes[K_LEFT] or keystrokes[K_SPACE] or keystrokes[K_RIGHT] or keystrokes[K_DOWN]:
                     monClient.keys(keystrokes)
-                    self.move(0,"bas")
+                    self.move(0,"droite")
 
             self.carte.draw(self.surface)
             for g in self.groupeForm :
@@ -66,14 +66,14 @@ class Jeu() :
         if direction == "bas" :
             self.forms[joueur].bas()
         if direction == "gauche" :
-            self.form[joueur].gauche()
+            self.forms[joueur].gauche()
         if direction == "droite" :
-            self.form[joueur].droite()
+            self.forms[joueur].droite()
         self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
 
 
     def create(self,joueur,form):
-        self.forms[joueur] = forme.Forme([0,4],[len(form[0]),len(form[0][0])],form)
+        self.forms[joueur] = forme.Forme([0,4],[len(form[0]),4+len(form[0][0])],form)
         self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
 
     def rotate(self,joueur):
