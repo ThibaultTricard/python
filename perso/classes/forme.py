@@ -26,14 +26,14 @@ class Forme():
             self.pos2[0] = self.pos2[0] + 1
 
     def tourner(self):
-        if self.formActuelle == 3 :
-            self.formActuelle = 0
+        formActuelle = self.formActuelle
+        if formActuelle == 3 :
+            formActuelle = 0
         else :
-            self.formActuelle = self.formActuelle + 1
-        """
-            je continue demain
-        """  
-            
-            
-        """todo"""
-        """calculer et verifier la pos2"""
+            formActuelle = formActuelle + 1
+        print str(self.pos1[0]+len(self.form[formActuelle]))
+        if self.pos1[0]+len(self.form[formActuelle]) < 23 :
+            self.formActuelle = formActuelle
+            self.pos2 = [self.pos1[0]+len(self.form[self.formActuelle]),self.pos1[1]+len(self.form[self.formActuelle][0])]
+            while self.pos2[1] > 10 :
+                self.gauche()
