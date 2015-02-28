@@ -126,11 +126,13 @@ class ClientChannel(Channel):
         if touches[K_DOWN]:
             #current_forme.bas()
             for client in self._server.clients:
-                    client.Send({"action":"move","message":{"Joueur":i,"Direction":"bas"}})
+                client.Send({"action":"move","message":{"Joueur":i,"Direction":"bas"}})
             print("down")
         if touches[K_SPACE]:
             #current_forme.rotate()
             print("rotate")
+            for client in self._server.clients:
+                client.Send({"action":"rotate","message":{"Joueur":i}})
 
     """
     suite à la demande de connexion du client, le serveur confirme la connexion

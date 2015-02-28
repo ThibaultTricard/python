@@ -19,6 +19,7 @@ class Jeu() :
         self.ip=ip
         self.port=port
         self.pseudo=pseudo
+        #formes des joueurs 0,1,2,3 
         self.forms = {0:FORM_VIDE,1:FORM_VIDE,2:FORM_VIDE,3:FORM_VIDE}
         self.groupeForm = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
         self.groupeFormStockee = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
@@ -70,7 +71,7 @@ class Jeu() :
                              1 : [2,2],
                              2 : [2,0]}})
         clock = pygame.time.Clock()
-        pygame.key.set_repeat(1,1)
+        #pygame.key.set_repeat(1,1)
 
         while True:
             clock.tick(60)
@@ -106,7 +107,9 @@ class Jeu() :
         self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
 
     def rotate(self,joueur):
-        pass
+        self.forms[joueur].tourner()
+        self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
+        
 
     def refresh(self,joueur, map) :
         pass

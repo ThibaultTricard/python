@@ -7,7 +7,7 @@ class Forme():
     def __init__(self, pos1, pos2, form):
         self.pos1 = pos1 #bloc haut gauche
         self.pos2 = pos2 #bloc bas droite
-        self.form = form #comment est tournee la forme
+        self.form = form #dictionnaire comment est tournee la forme
         self.formActuelle = 0 #la forme est droite
 
     def gauche(self):
@@ -30,5 +30,8 @@ class Forme():
             self.formActuelle = 0
         else :
             self.formActuelle = self.formActuelle + 1
+            
+            
+            
         """todo"""
         """calculer et verifier la pos2"""

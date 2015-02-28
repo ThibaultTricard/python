@@ -76,3 +76,6 @@ class Client(ConnectionListener):
     def Network_move(self, data):
         print 'Mouvement'
         self.jeu.move(data['message']['Joueur'],data['message']['Direction'])
+    
+    def Network_rotate(self,data):
+        self.jeu.rotate(data['message']['Joueur'])
