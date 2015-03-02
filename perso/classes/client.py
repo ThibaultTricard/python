@@ -47,15 +47,16 @@ class Client(ConnectionListener):
 
     def Network_former(self,data):
         print "former"
-        self.jeu.create(data.joueur,data.forme)
+        print str(data)
+        self.jeu.create(data["joueur"],data["forme"])
 
     def Network_poser(self,data):
         print "poser"
-        self.jeu.collision(data.joueur)
+        self.jeu.collision(data["joueur"])
 
     def Network_rafraishir(self,data):
         print 'rafraishir'
-        self.jeu.refresh(data.joueur,data.map)
+        self.jeu.refresh(data["joueur"],data["map"])
 
     def Network_deconnexion(self,data):
         print "deconnexion"
