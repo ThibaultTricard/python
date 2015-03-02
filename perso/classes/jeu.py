@@ -107,3 +107,6 @@ class Jeu() :
 
     def commencer(self):
         self.begin = True
+
+    def collision(self , joueur):
+        pass
