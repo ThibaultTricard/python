@@ -91,7 +91,6 @@ class Jeu() :
             self.forms[joueur].droite()
         self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
 
-
     def create(self,joueur,form):
         self.forms[joueur] = forme.Forme([0,4],[len(form[0]),4+len(form[0][0])],form)
         self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
@@ -100,10 +99,13 @@ class Jeu() :
         self.forms[joueur].tourner()
         self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
 
-
     def refresh(self,joueur, map) :
         form = forme.Forme([0,0],[21,10],{0:map})
         self.groupeFormStockee[joueur] = mapLoader.paint(form,joueur)
 
     def commencer(self):
         self.begin = True
+
+    def collision(self , joueur):
+        for s in groupeForm[joueur].sprites():
+            self.groupeFormStockee[joueur].add(s)

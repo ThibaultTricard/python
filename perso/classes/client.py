@@ -45,6 +45,18 @@ class Client(ConnectionListener):
         print 'error:', data['error'][1]
         connection.Close()
 
+    def Network_former(self,data):
+        print "former"
+        self.jeu.create(data.joueur,data.forme)
+
+    def Network_poser(self,data):
+        print "poser"
+        self.jeu.collision(data.joueur)
+
+    def Network_rafraishir(self,data):
+        print 'rafraishir'
+        self.jeu.refresh(data.joueur,data.map)
+
     def Network_deconnexion(self,data):
         print "deconnexion"
         connection.close()
@@ -76,6 +88,6 @@ class Client(ConnectionListener):
     def Network_move(self, data):
         print 'Mouvement'
         self.jeu.move(data['message']['Joueur'],data['message']['Direction'])
-    
+
     def Network_rotate(self,data):
         self.jeu.rotate(data['message']['Joueur'])
