@@ -66,7 +66,7 @@ class Jeu() :
                     sys.exit(0)
             keystrokes = pygame.key.get_pressed()
             if self.begin :
-                if keystrokes[K_LEFT]or keystrokes[K_SPACE] or keystrokes[K_RIGHT]:
+                if keystrokes[K_LEFT] or keystrokes[K_SPACE] or keystrokes[K_RIGHT]:
                     if cd == 0 :
                         monClient.keys(keystrokes)
                         cd = 10
