@@ -11,25 +11,7 @@ def create() :
                 maMap.add(block.Block(rect,0))
     return maMap
 
-def update(forms,groupeForm,groupeFormStockee) :
-    maMap = pygame.sprite.RenderClear()
-    for k in range(4) :
-        for i in range(22) :
-            for j in range(10):
-                x=j*16+k*180 +50
-                y=i*16+150
-                caseOccupe=False
-                for sprite in groupeForm.sprites():
-                    if sprite.rect.x==x and sprite.rect.y==y:
-                        caseOccupe=True
-                        maMap.add(sprite)
-                if caseOccupe==False:
-                    maMap.add(block.Block([x,y],0))
-
-    return maMap
-
 def paint(form, joueur):
-    print form.form[form.formActuelle]
     maForm = pygame.sprite.RenderClear()
     for i in range(len(form.form[form.formActuelle])):
         for j in range(len(form.form[form.formActuelle][i])):
