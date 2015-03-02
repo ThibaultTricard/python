@@ -23,56 +23,39 @@ class Jeu() :
         self.forms = {0:FORM_VIDE,1:FORM_VIDE,2:FORM_VIDE,3:FORM_VIDE}
         self.groupeForm = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
         self.groupeFormStockee = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
-        self.begin = True
+        self.begin = False
         self.carte = mapLoader.create()
         self.carte.draw(self.surface)
         pygame.display.flip()
 
     def lancer(self):
         monClient = client.Client(self.ip, self.port, self.pseudo, self)
-        self.create(0,{0 : { 0 : [0,2,0],
-                             1 : [2,2,2]},
-                       1 : { 0 : [0,2],
-                             1 : [2,2],
-                             2 : [0,2]},
-                       2 : { 0 : [2,2,2],
-                             1 : [0,2,0]},
-                       3 : { 0 : [2,0],
-                             1 : [2,2],
-                             2 : [2,0]}})
-        self.create(1,{0 : { 0 : [0,2,0],
-                             1 : [2,2,2]},
-                       1 : { 0 : [0,2],
-                             1 : [2,2],
-                             2 : [0,2]},
-                       2 : { 0 : [2,2,2],
-                             1 : [0,2,0]},
-                       3 : { 0 : [2,0],
-                             1 : [2,2],
-                             2 : [2,0]}})
-        self.create(2,{0 : { 0 : [0,2,0],
-                             1 : [2,2,2]},
-                       1 : { 0 : [0,2],
-                             1 : [2,2],
-                             2 : [0,2]},
-                       2 : { 0 : [2,2,2],
-                             1 : [0,2,0]},
-                       3 : { 0 : [2,0],
-                             1 : [2,2],
-                             2 : [2,0]}})
-        self.create(3,{0 : { 0 : [0,2,0],
-                             1 : [2,2,2]},
-                       1 : { 0 : [0,2],
-                             1 : [2,2],
-                             2 : [0,2]},
-                       2 : { 0 : [2,2,2],
-                             1 : [0,2,0]},
-                       3 : { 0 : [2,0],
-                             1 : [2,2],
-                             2 : [2,0]}})
         clock = pygame.time.Clock()
         #pygame.key.set_repeat(1,1)
         cd = 0
+        MAP ={0 :[0,0,0,0,0,0,0,0,0,0],
+        1 :[0,0,0,0,0,0,0,0,0,0],
+        2 :[0,0,0,0,0,0,0,0,0,0],
+        3 :[0,0,0,0,0,0,0,0,0,0],
+        4 :[0,0,0,0,0,0,0,0,0,0],
+        5 :[0,0,0,0,0,0,0,0,0,0],
+        6 :[0,0,0,0,0,0,0,0,0,0],
+        7 :[0,0,0,0,0,0,0,0,0,0],
+        8 :[0,0,0,0,0,0,0,0,0,0],
+        9 :[0,0,0,0,0,0,0,0,0,0],
+        10:[0,0,0,0,0,0,0,0,0,0],
+        11:[0,0,0,0,0,0,0,0,0,0],
+        12:[0,0,0,0,0,0,0,0,0,0],
+        13:[0,0,0,0,0,0,0,0,0,0],
+        14:[0,0,0,0,0,0,0,0,0,0],
+        15:[0,0,0,0,0,0,0,0,0,0],
+        16:[0,0,0,0,0,0,0,0,0,0],
+        17:[0,0,0,0,0,0,0,0,0,0],
+        18:[0,0,0,0,0,0,0,0,0,0],
+        19:[0,0,0,0,6,0,0,0,0,0],
+        20:[0,0,0,0,6,4,4,4,3,3],
+        21:[1,1,1,1,6,6,4,3,3,0]}
+        self.refresh(0, MAP)
         while True:
             clock.tick(60)
             monClient.Loop()
@@ -94,7 +77,8 @@ class Jeu() :
             self.carte.draw(self.surface)
             for g in self.groupeForm :
                 self.groupeForm[g].draw(self.surface)
-
+            for g in self.groupeFormStockee :
+                self.groupeFormStockee[g].draw(self.surface)
 
             pygame.display.flip()
 
@@ -118,7 +102,8 @@ class Jeu() :
 
 
     def refresh(self,joueur, map) :
-        pass
+        form = forme.Forme([0,0],[21,10],{0:map})
+        self.groupeFormStockee[joueur] = mapLoader.paint(form,joueur)
 
     def commencer(self):
         self.begin = True
