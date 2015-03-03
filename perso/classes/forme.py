@@ -37,3 +37,12 @@ class Forme():
             self.pos2 = [self.pos1[0]+len(self.form[self.formActuelle]),self.pos1[1]+len(self.form[self.formActuelle][0])]
             while self.pos2[1] > 10 :
                 self.gauche()
+                
+    def getPos1(self):
+        return self.pos1
+    
+    def getPos2(self):
+        return self.pos2
+
+    def getForm(self):
+        return self.form

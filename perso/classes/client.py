@@ -87,8 +87,8 @@ class Client(ConnectionListener):
     def setMainView(self,mainView):
         self.mainView=mainView
     #Envoie les touches pressees au serveur
-    def keys(self,data):
-        connection.Send({'action':'keys','keystrokes':data})
+    def keys(self,data,map):
+        connection.Send({'action':'keys','keystrokes':data,'map':map})
 
     def Network_move(self, data):
         print 'Mouvement'
@@ -97,9 +97,6 @@ class Client(ConnectionListener):
     def Network_rotate(self,data):
         self.jeu.rotate(data['message']['Joueur'])
         
-    """
-    A la detection d'une collision le client averti au serveur que y'a une collision
-    """
-    def collision(self,data):
-        print "Collision !"
+    def getJeu(self):
+        return self.jeu
         

@@ -106,11 +106,10 @@ class ClientChannel(Channel):
             if client!=self:
                 client.Send({"action":"message","message":data['message']})
     
-    def getNbClient(self):
-        return len(self.clients)
-    
     def Network_keys(self,data):
         touches = data['keystrokes']
+        map=data['map']
+       # jeu=data['jeu']
         i=0
         estClientActuelle=True
         for client in self._server.clients:
@@ -120,6 +119,9 @@ class ClientChannel(Channel):
                 i=i+1
         if touches[K_LEFT]:
             #current_forme.gauche()
+            
+           # self.controlerCollision(map,jeu.getForme(i))
+            
             for client in self._server.clients:
                     client.Send({"action":"move","message":{"Joueur":i,"Direction":"gauche"}})
             print("left")
@@ -138,6 +140,7 @@ class ClientChannel(Channel):
             print("rotate")
             for client in self._server.clients:
                 client.Send({"action":"rotate","message":{"Joueur":i}})
-
-    def Network_collision(self,data):
-        pass
+    
+    def controlerCollision(self,map,forme):
+        print("Coucou")
+        

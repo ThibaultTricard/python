@@ -46,11 +46,6 @@ class MyServer(Server):
             time.sleep(0.01)
             self.Pump()
     
-    def setJeu(self,jeu):
-        self.jeu=jeu
-    
-    def miseAJourMap(self):
-        map=self.jeu.getMap()
         
         
 

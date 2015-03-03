@@ -71,11 +71,11 @@ class Jeu() :
             if self.begin :
                 if keystrokes[K_LEFT] or keystrokes[K_SPACE] or keystrokes[K_RIGHT]:
                     if cd == 0 :
-                        monClient.keys(keystrokes)
+                        monClient.keys(keystrokes,self.MAP)
                         cd = 10
 
                 if keystrokes[K_DOWN] :
-                    monClient.keys(keystrokes)
+                    monClient.keys(keystrokes,self.MAP)
 
             self.carte.draw(self.surface)
             for g in self.groupeForm :
@@ -115,3 +115,6 @@ class Jeu() :
     
     def getMap(self):
         return self.MAP
+
+    def getForme(self,joueur):
+        return self.forms[joueur]
