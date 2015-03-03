@@ -54,8 +54,8 @@ class Client(ConnectionListener):
         print "poser"
         self.jeu.collision(data["joueur"])
 
-    def Network_rafraishir(self,data):
-        print 'rafraishir'
+    def Network_rafraichir(self,data):
+        print 'rafraichir'
         self.jeu.refresh(data["joueur"],data["map"])
 
     def Network_deconnexion(self,data):
