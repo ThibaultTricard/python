@@ -25,6 +25,8 @@ class MyServer(Server):
         print('client deconnecte')
         self.clients.remove(channel)
 
+    def getNbClient(self):
+        return len(self.clients)
 
     def launch_game(self):
         # Init Pygame

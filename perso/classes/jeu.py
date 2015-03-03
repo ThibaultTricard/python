@@ -107,5 +107,5 @@ class Jeu() :
         self.begin = True
 
     def collision(self , joueur):
-        for s in groupeForm[joueur].sprites():
+        for s in self.groupeForm[joueur].sprites():
             self.groupeFormStockee[joueur].add(s)

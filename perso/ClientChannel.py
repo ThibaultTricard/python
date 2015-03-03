@@ -78,14 +78,11 @@ Block_L2=      { 0 : {0 : [7,7],
                       2 : [7,7]},
                  3 : {0 : [7,7,7],
                       1 : [0,0,7]}}
-
+NB_JOUEUR_LIMITE=4
 
 #Héritage de la classe Channel
 #La classe Channel a un attribut _server
 class ClientChannel(Channel):
-
-
-
     def __init__(self, *args, **kwargs):
         Channel.__init__(self, *args, **kwargs)
 
@@ -96,14 +93,22 @@ class ClientChannel(Channel):
         print('message de type %s recu' % data['action'])
 
     def Network_username(self,data):
-        print('username recu : %s ' % data['username'])
+        print(self._server.getNbClient())
+        if self._server.getNbClient()<=NB_JOUEUR_LIMITE:
+            print('username recu : %s ' % data['username'])
+            self.Send({"action":"confirmationConnexion"})
+        else:
+            self.Send({"action":"connexionRefusee"})
 
     def Network_message(self,data):
         print data['message']
         for client in self._server.clients:
             if client!=self:
                 client.Send({"action":"message","message":data['message']})
-
+    
+    def getNbClient(self):
+        return len(self.clients)
+    
     def Network_keys(self,data):
         touches = data['keystrokes']
         i=0
@@ -137,6 +142,7 @@ class ClientChannel(Channel):
     """
     suite à la demande de connexion du client, le serveur confirme la connexion
     Il y'a des tests à faire mais là jsuis fatigué il est minuit 53
+    A SUPPRIMER
     """
     def Network_demandeConnexion(self,data):
         if len(self._server.clients)<=4:

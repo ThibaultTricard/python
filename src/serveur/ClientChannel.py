@@ -3,7 +3,7 @@
 from PodSixNet.Channel import Channel
 import pygame
 from pygame.locals import *
-
+NB_JOUEUR_LIMITE=4
 Block_Ligne = {0 : { 0 : [1],
                      1 : [1],
                      2 : [1],
@@ -96,8 +96,13 @@ class ClientChannel(Channel):
         print('message de type %s recu' % data['action'])
 
     def Network_username(self,data):
-        print('username recu : %s ' % data['username'])
-
+        print(self._server.getNbClient())
+        if len(self._server.getNbClient())<=NB_JOUEUR_LIMITE:
+            print('username recu : %s ' % data['username'])
+            self.Send({"action":"confirmationConnexion"})
+        else:
+            self.Send({"action":"connexionRefusee"})
+            
     def Network_message(self,data):
         print data['message']
         for client in self._server.clients:

@@ -44,7 +44,11 @@ class Client(ConnectionListener):
     def Network_error(self, data):
         print 'error:', data['error'][1]
         connection.Close()
-
+        
+    def Network_connexionRefusee(self,data):
+        print "Desole plus de place !"
+        sys.exit()
+        
     def Network_former(self,data):
         print "former"
         print str(data)
@@ -62,7 +66,7 @@ class Client(ConnectionListener):
         print "deconnexion"
         connection.close()
         sys.exit()
-
+        
     def demanderNouvellePartie(self):
         print "Demande nouvelle partie"
         connection.Send({"action":"demandeConnexion"})
