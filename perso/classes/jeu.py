@@ -6,6 +6,7 @@ from classes import forme
 from classes import block
 import pygame
 from pygame.locals import *
+from pygame.sprite import groupcollide
 FORM_VIDE = forme.Forme([0,0],[0,0],{0:{},
              1:{},
              2:{},
@@ -21,7 +22,9 @@ class Jeu() :
         self.pseudo=pseudo
         #formes des joueurs 0,1,2,3
         self.forms = {0:FORM_VIDE,1:FORM_VIDE,2:FORM_VIDE,3:FORM_VIDE}
+        #formes qui bougent
         self.groupeForm = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
+        #formes qui ne bougent pas
         self.groupeFormStockee = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
         self.begin = False
         self.carte = mapLoader.create()
@@ -33,7 +36,7 @@ class Jeu() :
         clock = pygame.time.Clock()
         #pygame.key.set_repeat(1,1)
         cd = 0
-        MAP ={0 :[0,0,0,0,0,0,0,0,0,0],
+        self.MAP ={0 :[0,0,0,0,0,0,0,0,0,0],
         1 :[0,0,0,0,0,0,0,0,0,0],
         2 :[0,0,0,0,0,0,0,0,0,0],
         3 :[0,0,0,0,0,0,0,0,0,0],
@@ -55,7 +58,7 @@ class Jeu() :
         19:[0,0,0,0,6,0,0,0,0,0],
         20:[0,0,0,0,6,4,4,4,3,3],
         21:[1,1,1,1,6,6,4,3,3,0]}
-        self.refresh(0, MAP)
+        self.refresh(0, self.MAP)
         while True:
             clock.tick(60)
             monClient.Loop()
@@ -78,8 +81,8 @@ class Jeu() :
             for g in self.groupeForm :
                 self.groupeForm[g].draw(self.surface)
             for g in self.groupeFormStockee :
-                self.groupeFormStockee[g].draw(self.surface)
-
+                self.groupeFormStockee[g].draw(self.surface)    
+        
             pygame.display.flip()
 
     def move(self,joueur,direction):
@@ -105,7 +108,10 @@ class Jeu() :
 
     def commencer(self):
         self.begin = True
-
+                
     def collision(self , joueur):
         for s in self.groupeForm[joueur].sprites():
             self.groupeFormStockee[joueur].add(s)
+    
+    def getMap(self):
+        return self.MAP

@@ -61,7 +61,7 @@ class Client(ConnectionListener):
     def Network_rafraichir(self,data):
         print 'rafraichir'
         self.jeu.refresh(data["joueur"],data["map"])
-
+    
     def Network_deconnexion(self,data):
         print "deconnexion"
         connection.close()
@@ -96,3 +96,10 @@ class Client(ConnectionListener):
 
     def Network_rotate(self,data):
         self.jeu.rotate(data['message']['Joueur'])
+        
+    """
+    A la detection d'une collision le client averti au serveur que y'a une collision
+    """
+    def collision(self,data):
+        print "Collision !"
+        

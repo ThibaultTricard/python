@@ -45,14 +45,12 @@ class MyServer(Server):
         while True:
             time.sleep(0.01)
             self.Pump()
+    
+    def setJeu(self,jeu):
+        self.jeu=jeu
+    
+    def miseAJourMap(self):
+        map=self.jeu.getMap()
+        
+        
 
-
-
-class ClientChannel(Channel):
-
-    def __init__(self, *args, **kwargs):
-        Channel.__init__(self, *args, **kwargs)
-        self.current_forme=pygame.Sprite.RenderClear()
-
-    def Close(self):
-        self._server.del_client(self)

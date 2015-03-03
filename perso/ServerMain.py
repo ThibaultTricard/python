@@ -8,12 +8,12 @@ import imp
 from classes import forme
 from classes import joueur
 from classes import carte
-
+NB_CLIENT_NECESSAIRE=2
 def main_prog():
     launched = False
     my_server = MyServer(localaddr = (sys.argv[1],int(sys.argv[2])))
     while launched==False:
-        if len(my_server.clients)==2 and launched==False:
+        if len(my_server.clients)==NB_CLIENT_NECESSAIRE and launched==False:
             for client in my_server.clients:
                 client.Send({"action":"ready"})
             launched = True

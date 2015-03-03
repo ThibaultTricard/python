@@ -139,13 +139,5 @@ class ClientChannel(Channel):
             for client in self._server.clients:
                 client.Send({"action":"rotate","message":{"Joueur":i}})
 
-    """
-    suite à la demande de connexion du client, le serveur confirme la connexion
-    Il y'a des tests à faire mais là jsuis fatigué il est minuit 53
-    A SUPPRIMER
-    """
-    def Network_demandeConnexion(self,data):
-        if len(self._server.clients)<=4:
-            self.Send({"action":"confirmationConnexion"})
-        else:
-            print "Désolé plus de place !"
+    def Network_collision(self,data):
+        pass
