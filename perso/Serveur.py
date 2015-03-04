@@ -8,7 +8,7 @@ from classes import map
 from classes import forme
 import time
 import random
-
+import copy
 FORM_VIDE = forme.Forme([0,0],[0,0],{0:{},
              1:{},
              2:{},
@@ -22,7 +22,7 @@ class MyServer(Server):
     def __init__(self, *args, **kwargs):
         Server.__init__(self, *args, **kwargs)
         self.clients = []
-        self.MAPS= {0:map.MAP,1:map.MAP,2:map.MAP,3:map.MAP}
+        self.MAPS= {0:copy.deepcopy(map.MAP),1:copy.deepcopy(map.MAP),2:copy.deepcopy(map.MAP),3:copy.deepcopy(map.MAP)}
         self.forms={0:FORM_VIDE,1:FORM_VIDE,2:FORM_VIDE,3:FORM_VIDE}
         print('Server launched')
 

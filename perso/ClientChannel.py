@@ -125,8 +125,9 @@ class ClientChannel(Channel):
                 estClientActuelle=False
             if estClientActuelle:
                 i=i+1
-        formeActuelle = copy.copy(self._server.forms[i])
-        MAP = copy.copy(self._server.MAPS[i])
+        formeActuelle = copy.deepcopy(self._server.forms[i])
+        MAP = copy.deepcopy(self._server.MAPS[i])
+        print str(formeActuelle.pos1)
         if touches[K_LEFT]:
             #current_forme.gauche()
             formeActuelle.gauche()
@@ -149,7 +150,7 @@ class ClientChannel(Channel):
                 for client in self._server.clients:
                     client.Send({"action":"move","message":{"Joueur":i,"Direction":"bas"}})
                 print("down")
-            if not self.controlerCollision(MAP,formeActuelle) or self._server.forms[i].pos2[0] == 21 :
+            if not self.controlerCollision(MAP,formeActuelle) or self._server.forms[i].pos2[0] == 22 :
                 for client in self._server.clients:
                     client.Send({"action":"poser","joueur":i})
                 self.collision(i)
@@ -201,12 +202,14 @@ class ClientChannel(Channel):
     def collision(self, joueur):
         for i in range(len(self._server.forms[joueur].form[self._server.forms[joueur].formActuelle])) :
             for j in range(len(self._server.forms[joueur].form[self._server.forms[joueur].formActuelle][i])):
-                self._server.MAPS[joueur][i + self._server.forms[joueur].pos1[0] ][j + self._server.forms[joueur].pos1[1]] = self._server.forms[joueur].form[self._server.forms[joueur].formActuelle][i][j]
+                if  self._server.forms[joueur].form[self._server.forms[joueur].formActuelle][i][j] >= 1 :
+                    self._server.MAPS[joueur][i + self._server.forms[joueur].pos1[0] ][j + self._server.forms[joueur].pos1[1]] = self._server.forms[joueur].form[self._server.forms[joueur].formActuelle][i][j]
 
     def controlerCollision(self, MAP,forme) :
         for i in range(len(forme.form[forme.formActuelle])) :
             for j in range(len(forme.form[forme.formActuelle][i])):
                 if forme.form[forme.formActuelle][i][j] >=1  :
-                    if MAP[i + forme.pos1[0] ][j + forme.pos1[1]] >= 1 :
+                    if MAP[i + forme.pos1[0]][j + forme.pos1[1]] >= 1 :
+                        print "false"
                         return False
         return True
