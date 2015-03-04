@@ -163,7 +163,6 @@ class ClientChannel(Channel):
                     client.Send({"action":"former","joueur":i,"forme":formes[nbForme]})
 
         if touches[K_SPACE]:
-<<<<<<< HEAD
             formeActuelle.tourner()
             if self.controlerCollision(MAP,formeActuelle) :
                 self._server.forms[i] = formeActuelle
@@ -172,13 +171,6 @@ class ClientChannel(Channel):
                 print("rotate")
 
 
-=======
-            #current_forme.rotate()
-            print("rotate")
-            for client in self._server.clients:
-                client.Send({"action":"rotate","message":{"Joueur":i}})
-                
->>>>>>> origin/master
     def Network_checkLigne(self,data):
         joueur=0
         estClientActuelle=True
