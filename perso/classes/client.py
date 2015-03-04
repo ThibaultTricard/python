@@ -88,7 +88,7 @@ class Client(ConnectionListener):
         self.mainView=mainView
     #Envoie les touches pressees au serveur
     def keys(self,data,map):
-        connection.Send({'action':'keys','keystrokes':data,'map':map})
+        connection.Send({'action':'keys','keystrokes':data,map})
 
     def Network_move(self, data):
         print 'Mouvement'

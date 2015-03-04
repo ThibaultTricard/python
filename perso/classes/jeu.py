@@ -116,5 +116,5 @@ class Jeu() :
     def getMap(self):
         return self.MAP
 
-    def getForme(self,joueur):
+    def getForms(self,joueur):
         return self.forms[joueur]
