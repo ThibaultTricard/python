@@ -52,6 +52,7 @@ class Client(ConnectionListener):
     def Network_former(self,data):
         print "former"
         print str(data)
+        connection.Send({"action":"former","forme":data["forme"]})
         self.jeu.create(data["joueur"],data["forme"])
 
     def Network_poser(self,data):
@@ -87,8 +88,8 @@ class Client(ConnectionListener):
     def setMainView(self,mainView):
         self.mainView=mainView
     #Envoie les touches pressees au serveur
-    def keys(self,data,forms):
-        connection.Send({'action':'keys','keystrokes':data,'forms':forms})
+    def keys(self,data):
+        connection.Send({'action':'keys','keystrokes':data})
 
     def Network_move(self, data):
         print 'Mouvement'
@@ -96,6 +97,12 @@ class Client(ConnectionListener):
 
     def Network_rotate(self,data):
         self.jeu.rotate(data['message']['Joueur'])
+    
+    def demanderMap(self):
+        connection.Send({"action":"rafraichir"})
+        
+    def miseAJourMap(self):
+        connection.Send({"action":"miseAJourMap","map":self.MAP})
         
     def getJeu(self):
         return self.jeu

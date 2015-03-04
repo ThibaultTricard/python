@@ -3,6 +3,7 @@
 from PodSixNet.Channel import Channel
 import pygame
 from pygame.locals import *
+from classes import map
 
 Block_Ligne = {0 : { 0 : [1],
                      1 : [1],
@@ -85,6 +86,7 @@ NB_JOUEUR_LIMITE=4
 class ClientChannel(Channel):
     def __init__(self, *args, **kwargs):
         Channel.__init__(self, *args, **kwargs)
+        self.map=map.MAP
 
     def Close(self):
         self._server.del_client(self)
@@ -99,7 +101,12 @@ class ClientChannel(Channel):
             self.Send({"action":"confirmationConnexion"})
         else:
             self.Send({"action":"connexionRefusee"})
-
+            
+    def Network_rafraichir(self,data):
+        i=0
+        for client in self._server.clients:
+            client.Send({"action":"rafraichir","map":self.map,"joueur":i})
+        
     def Network_message(self,data):
         print data['message']
         for client in self._server.clients:
@@ -108,8 +115,7 @@ class ClientChannel(Channel):
     
     def Network_keys(self,data):
         touches = data['keystrokes']
-        forms=data['forms']
-       # jeu=data['jeu']
+        # jeu=data['jeu']
         i=0
         estClientActuelle=True
         for client in self._server.clients:
@@ -120,7 +126,7 @@ class ClientChannel(Channel):
         if touches[K_LEFT]:
             #current_forme.gauche()
             
-           # self.controlerCollision(map,jeu.getForme(i))
+            # self.controlerCollision(map,jeu.getForme(i))
             
             for client in self._server.clients:
                     client.Send({"action":"move","message":{"Joueur":i,"Direction":"gauche"}})
@@ -140,7 +146,11 @@ class ClientChannel(Channel):
             print("rotate")
             for client in self._server.clients:
                 client.Send({"action":"rotate","message":{"Joueur":i}})
+                
+    def Network_miseAJourMap(self,data):
+        self.map=data["map"]
     
+        
     def controlerCollision(self,map,forme):
         print("Coucou")
         

@@ -33,32 +33,10 @@ class Jeu() :
 
     def lancer(self):
         monClient = client.Client(self.ip, self.port, self.pseudo, self)
+        monClient.demanderMap()
         clock = pygame.time.Clock()
         #pygame.key.set_repeat(1,1)
         cd = 0
-        self.MAP ={0 :[0,0,0,0,0,0,0,0,0,0],
-        1 :[0,0,0,0,0,0,0,0,0,0],
-        2 :[0,0,0,0,0,0,0,0,0,0],
-        3 :[0,0,0,0,0,0,0,0,0,0],
-        4 :[0,0,0,0,0,0,0,0,0,0],
-        5 :[0,0,0,0,0,0,0,0,0,0],
-        6 :[0,0,0,0,0,0,0,0,0,0],
-        7 :[0,0,0,0,0,0,0,0,0,0],
-        8 :[0,0,0,0,0,0,0,0,0,0],
-        9 :[0,0,0,0,0,0,0,0,0,0],
-        10:[0,0,0,0,0,0,0,0,0,0],
-        11:[0,0,0,0,0,0,0,0,0,0],
-        12:[0,0,0,0,0,0,0,0,0,0],
-        13:[0,0,0,0,0,0,0,0,0,0],
-        14:[0,0,0,0,0,0,0,0,0,0],
-        15:[0,0,0,0,0,0,0,0,0,0],
-        16:[0,0,0,0,0,0,0,0,0,0],
-        17:[0,0,0,0,0,0,0,0,0,0],
-        18:[0,0,0,0,0,0,0,0,0,0],
-        19:[0,0,0,0,6,0,0,0,0,0],
-        20:[0,0,0,0,6,4,4,4,3,3],
-        21:[1,1,1,1,6,6,4,3,3,0]}
-        self.refresh(0, self.MAP)
         while True:
             clock.tick(60)
             monClient.Loop()
@@ -71,18 +49,17 @@ class Jeu() :
             if self.begin :
                 if keystrokes[K_LEFT] or keystrokes[K_SPACE] or keystrokes[K_RIGHT]:
                     if cd == 0 :
-                        monClient.keys(keystrokes,self.forms)
+                        monClient.keys(keystrokes)
                         cd = 10
 
                 if keystrokes[K_DOWN] :
-                    monClient.keys(keystrokes,self.MAP)
+                    monClient.keys(keystrokes)
 
             self.carte.draw(self.surface)
             for g in self.groupeForm :
                 self.groupeForm[g].draw(self.surface)
             for g in self.groupeFormStockee :
                 self.groupeFormStockee[g].draw(self.surface)    
-        
             pygame.display.flip()
 
     def move(self,joueur,direction):
