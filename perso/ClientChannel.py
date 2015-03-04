@@ -127,7 +127,6 @@ class ClientChannel(Channel):
             #current_forme.gauche()
             
             # self.controlerCollision(map,jeu.getForme(i))
-            
             for client in self._server.clients:
                     client.Send({"action":"move","message":{"Joueur":i,"Direction":"gauche"}})
             print("left")
@@ -149,8 +148,5 @@ class ClientChannel(Channel):
                 
     def Network_miseAJourMap(self,data):
         self.map=data["map"]
-    
-        
-    def controlerCollision(self,map,forme):
-        print("Coucou")
+
         
