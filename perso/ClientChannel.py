@@ -3,7 +3,6 @@
 from PodSixNet.Channel import Channel
 import pygame
 from pygame.locals import *
-from classes import map
 
 Block_Ligne = {0 : { 0 : [1],
                      1 : [1],
@@ -86,7 +85,6 @@ NB_JOUEUR_LIMITE=4
 class ClientChannel(Channel):
     def __init__(self, *args, **kwargs):
         Channel.__init__(self, *args, **kwargs)
-        self.map=map.MAP
 
     def Close(self):
         self._server.del_client(self)
@@ -101,18 +99,18 @@ class ClientChannel(Channel):
             self.Send({"action":"confirmationConnexion"})
         else:
             self.Send({"action":"connexionRefusee"})
-            
+
     def Network_rafraichir(self,data):
         i=0
-        for client in self._server.clients:
-            client.Send({"action":"rafraichir","map":self.map,"joueur":i})
-        
+        #for client in self._server.clients:
+            #client.Send({"action":"rafraichir","map":self.map,"joueur":i})
+
     def Network_message(self,data):
         print data['message']
         for client in self._server.clients:
             if client!=self:
                 client.Send({"action":"message","message":data['message']})
-    
+
     def Network_keys(self,data):
         touches = data['keystrokes']
         # jeu=data['jeu']
@@ -125,7 +123,7 @@ class ClientChannel(Channel):
                 i=i+1
         if touches[K_LEFT]:
             #current_forme.gauche()
-            
+
             # self.controlerCollision(map,jeu.getForme(i))
             for client in self._server.clients:
                     client.Send({"action":"move","message":{"Joueur":i,"Direction":"gauche"}})
@@ -145,8 +143,29 @@ class ClientChannel(Channel):
             print("rotate")
             for client in self._server.clients:
                 client.Send({"action":"rotate","message":{"Joueur":i}})
-                
+    def Network_checkLigne(self,data):
+        joueur=0
+        estClientActuelle=True
+        for client in self._server.clients:
+            if client==self:
+                estClientActuelle=False
+            if estClientActuelle:
+                joueur=joueur+1
+        MAP = self._server.getMapParJoueur(joueur);
+        ligneModifie=1
+        while ligneModifie!=0:
+            ligneModifie=0
+            for i in range(len(MAP)):
+                caseVide=False
+                for j in range(len(MAP[i])):
+                    if MAP[i][j]==0:
+                        caseVide=True
+                if caseVide==False:
+                    ligneModifie=1
+                    for k in range(i,1,-1):
+                        MAP[k]=MAP[k-1]
+        for client in self._server.clients:
+                client.Send({"action":"refreshMap","message":{"Joueur":joueur,"MAP":MAP}})
     def Network_miseAJourMap(self,data):
-        self.map=data["map"]
-
-        
+        #self.map=data["map"]
+        pass

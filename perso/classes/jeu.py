@@ -49,7 +49,8 @@ class Jeu() :
             if self.begin :
                 if keystrokes[K_LEFT] or keystrokes[K_SPACE] or keystrokes[K_RIGHT]:
                     if cd == 0 :
-                        monClient.keys(keystrokes)
+                        #monClient.keys(keystrokes)
+                        monClient.checkLigne()
                         cd = 10
 
                 if keystrokes[K_DOWN] :
@@ -59,7 +60,7 @@ class Jeu() :
             for g in self.groupeForm :
                 self.groupeForm[g].draw(self.surface)
             for g in self.groupeFormStockee :
-                self.groupeFormStockee[g].draw(self.surface)    
+                self.groupeFormStockee[g].draw(self.surface)
             pygame.display.flip()
 
     def move(self,joueur,direction):

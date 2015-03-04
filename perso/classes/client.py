@@ -44,11 +44,11 @@ class Client(ConnectionListener):
     def Network_error(self, data):
         print 'error:', data['error'][1]
         connection.Close()
-        
+
     def Network_connexionRefusee(self,data):
         print "Desole plus de place !"
         sys.exit()
-        
+
     def Network_former(self,data):
         print "former"
         print str(data)
@@ -62,12 +62,12 @@ class Client(ConnectionListener):
     def Network_rafraichir(self,data):
         print 'rafraichir'
         self.jeu.refresh(data["joueur"],data["map"])
-    
+
     def Network_deconnexion(self,data):
         print "deconnexion"
         connection.close()
         sys.exit()
-        
+
     def demanderNouvellePartie(self):
         print "Demande nouvelle partie"
         connection.Send({"action":"demandeConnexion"})
@@ -91,19 +91,24 @@ class Client(ConnectionListener):
     def keys(self,data):
         connection.Send({'action':'keys','keystrokes':data})
 
+    def checkLigne(self):
+        connection.Send({'action':'checkLigne'})
+
+    def Network_refreshMap(self,data):
+        self.jeu.refresh(data['message']['Joueur'],data['message']['MAP'])
+
     def Network_move(self, data):
         print 'Mouvement'
         self.jeu.move(data['message']['Joueur'],data['message']['Direction'])
 
     def Network_rotate(self,data):
         self.jeu.rotate(data['message']['Joueur'])
-    
+
     def demanderMap(self):
         connection.Send({"action":"rafraichir"})
-        
+
     def miseAJourMap(self):
         connection.Send({"action":"miseAJourMap","map":self.MAP})
-        
+
     def getJeu(self):
         return self.jeu
-        
