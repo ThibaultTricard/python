@@ -143,6 +143,7 @@ class ClientChannel(Channel):
             print("rotate")
             for client in self._server.clients:
                 client.Send({"action":"rotate","message":{"Joueur":i}})
+                
     def Network_checkLigne(self,data):
         joueur=0
         estClientActuelle=True
