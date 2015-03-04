@@ -3,6 +3,10 @@
 from PodSixNet.Channel import Channel
 import pygame
 from pygame.locals import *
+import copy
+import random
+from classes import dictForme
+from classes import forme
 
 Block_Ligne = {0 : { 0 : [1],
                      1 : [1],
@@ -121,28 +125,52 @@ class ClientChannel(Channel):
                 estClientActuelle=False
             if estClientActuelle:
                 i=i+1
+        formeActuelle = copy.copy(self._server.forms[i])
+        MAP = copy.copy(self._server.MAPS[i])
         if touches[K_LEFT]:
             #current_forme.gauche()
-
-            # self.controlerCollision(map,jeu.getForme(i))
-            for client in self._server.clients:
+            formeActuelle.gauche()
+            if self.controlerCollision(MAP,formeActuelle) :
+                self._server.forms[i] = formeActuelle
+                for client in self._server.clients:
                     client.Send({"action":"move","message":{"Joueur":i,"Direction":"gauche"}})
-            print("left")
+                print("left")
         if touches[K_RIGHT]:
-            #current_forme.droite()
-            for client in self._server.clients:
+            formeActuelle.droite()
+            if self.controlerCollision(MAP,formeActuelle) :
+                self._server.forms[i] = formeActuelle
+                for client in self._server.clients:
                     client.Send({"action":"move","message":{"Joueur":i,"Direction":"droite"}})
-            print("right")
+                print("right")
         if touches[K_DOWN]:
-            #current_forme.bas()
-            for client in self._server.clients:
-                client.Send({"action":"move","message":{"Joueur":i,"Direction":"bas"}})
-            print("down")
+            formeActuelle.bas()
+            if self.controlerCollision(MAP,formeActuelle) :
+                self._server.forms[i] = formeActuelle
+                for client in self._server.clients:
+                    client.Send({"action":"move","message":{"Joueur":i,"Direction":"bas"}})
+                print("down")
+            if not self.controlerCollision(MAP,formeActuelle) or self._server.forms[i].pos2[0] == 21 :
+                for client in self._server.clients:
+                    client.Send({"action":"poser","joueur":i})
+                self.collision(i)
+                self.Network_checkLigne({})
+                nbForme=random.randint(0,6)
+                dict=dictForme.DictForme()
+                formes=dict.getFormes()
+                self._server.forms[i] = forme.Forme([0,4],[len(formes[nbForme][0]),4+len(formes[nbForme][0][0])],formes[nbForme])
+
+                for client in self._server.clients:
+                    client.Send({"action":"former","joueur":i,"forme":formes[nbForme]})
+
         if touches[K_SPACE]:
-            #current_forme.rotate()
-            print("rotate")
-            for client in self._server.clients:
-                client.Send({"action":"rotate","message":{"Joueur":i}})
+            formeActuelle.tourner()
+            if self.controlerCollision(MAP,formeActuelle) :
+                self._server.forms[i] = formeActuelle
+                for client in self._server.clients:
+                    client.Send({"action":"rotate","message":{"Joueur":i}})
+                print("rotate")
+
+
     def Network_checkLigne(self,data):
         joueur=0
         estClientActuelle=True
@@ -169,3 +197,16 @@ class ClientChannel(Channel):
     def Network_miseAJourMap(self,data):
         #self.map=data["map"]
         pass
+
+    def collision(self, joueur):
+        for i in range(len(self._server.forms[joueur].form[self._server.forms[joueur].formActuelle])) :
+            for j in range(len(self._server.forms[joueur].form[self._server.forms[joueur].formActuelle][i])):
+                self._server.MAPS[joueur][i + self._server.forms[joueur].pos1[0] ][j + self._server.forms[joueur].pos1[1]] = self._server.forms[joueur].form[self._server.forms[joueur].formActuelle][i][j]
+
+    def controlerCollision(self, MAP,forme) :
+        for i in range(len(forme.form[forme.formActuelle])) :
+            for j in range(len(forme.form[forme.formActuelle][i])):
+                if forme.form[forme.formActuelle][i][j] >=1  :
+                    if MAP[i + forme.pos1[0] ][j + forme.pos1[1]] >= 1 :
+                        return False
+        return True

@@ -49,8 +49,7 @@ class Jeu() :
             if self.begin :
                 if keystrokes[K_LEFT] or keystrokes[K_SPACE] or keystrokes[K_RIGHT]:
                     if cd == 0 :
-                        #monClient.keys(keystrokes)
-                        monClient.checkLigne()
+                        monClient.keys(keystrokes)
                         cd = 10
 
                 if keystrokes[K_DOWN] :
