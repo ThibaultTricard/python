@@ -71,7 +71,7 @@ class Jeu() :
             if self.begin :
                 if keystrokes[K_LEFT] or keystrokes[K_SPACE] or keystrokes[K_RIGHT]:
                     if cd == 0 :
-                        monClient.keys(keystrokes,self.MAP)
+                        monClient.keys(keystrokes,self.forms)
                         cd = 10
 
                 if keystrokes[K_DOWN] :

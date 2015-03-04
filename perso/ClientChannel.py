@@ -108,7 +108,7 @@ class ClientChannel(Channel):
     
     def Network_keys(self,data):
         touches = data['keystrokes']
-        map=data['map']
+        forms=data['forms']
        # jeu=data['jeu']
         i=0
         estClientActuelle=True
