@@ -91,8 +91,8 @@ class Client(ConnectionListener):
     def keys(self,data):
         connection.Send({'action':'keys','keystrokes':data})
 
-    def checkLigne(self):
-        connection.Send({'action':'checkLigne'})
+    def down(self):
+        connection.Send({'action':'down'})
 
     def Network_refreshMap(self,data):
         self.jeu.refresh(data['message']['Joueur'],data['message']['MAP'])

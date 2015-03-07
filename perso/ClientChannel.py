@@ -115,71 +115,71 @@ class ClientChannel(Channel):
             if client!=self:
                 client.Send({"action":"message","message":data['message']})
 
-    def Network_keys(self,data):
-        touches = data['keystrokes']
-        # jeu=data['jeu']
-        i=0
+    def joueurActuelle(self):
         estClientActuelle=True
+        i=0
         for client in self._server.clients:
             if client==self:
                 estClientActuelle=False
             if estClientActuelle:
                 i=i+1
-        formeActuelle = copy.deepcopy(self._server.forms[i])
-        MAP = copy.deepcopy(self._server.MAPS[i])
+        return i
+    def actionDown(self,formeActuelle,MAP,joueur):
+        formeActuelle.bas()
+        if self.controlerCollision(MAP,formeActuelle) :
+            self._server.forms[joueur] = formeActuelle
+            for client in self._server.clients:
+                client.Send({"action":"move","message":{"Joueur":joueur,"Direction":"bas"}})
+            print("down")
+        if not self.controlerCollision(MAP,formeActuelle) or self._server.forms[joueur].pos2[0] == 22 :
+            for client in self._server.clients:
+                client.Send({"action":"poser","joueur":joueur})
+            self.collision(joueur)
+            self.checkLigne({})
+            nbForme=random.randint(0,6)
+            dict=dictForme.DictForme()
+            formes=dict.getFormes()
+            self._server.forms[joueur] = forme.Forme([0,4],[len(formes[nbForme][0]),4+len(formes[nbForme][0][0])],formes[nbForme])
+
+            for client in self._server.clients:
+                client.Send({"action":"former","joueur":joueur,"forme":formes[nbForme]})
+
+    def Network_keys(self,data):
+        touches = data['keystrokes']
+        # jeu=data['jeu']
+        joueur=self.joueurActuelle()
+        formeActuelle = copy.deepcopy(self._server.forms[joueur])
+        MAP = copy.deepcopy(self._server.MAPS[joueur])
         print str(formeActuelle.pos1)
         if touches[K_LEFT]:
             #current_forme.gauche()
             formeActuelle.gauche()
             if self.controlerCollision(MAP,formeActuelle) :
-                self._server.forms[i] = formeActuelle
+                self._server.forms[joueur] = formeActuelle
                 for client in self._server.clients:
-                    client.Send({"action":"move","message":{"Joueur":i,"Direction":"gauche"}})
+                    client.Send({"action":"move","message":{"Joueur":joueur,"Direction":"gauche"}})
                 print("left")
         if touches[K_RIGHT]:
             formeActuelle.droite()
             if self.controlerCollision(MAP,formeActuelle) :
-                self._server.forms[i] = formeActuelle
+                self._server.forms[joueur] = formeActuelle
                 for client in self._server.clients:
-                    client.Send({"action":"move","message":{"Joueur":i,"Direction":"droite"}})
+                    client.Send({"action":"move","message":{"Joueur":joueur,"Direction":"droite"}})
                 print("right")
         if touches[K_DOWN]:
-            formeActuelle.bas()
-            if self.controlerCollision(MAP,formeActuelle) :
-                self._server.forms[i] = formeActuelle
-                for client in self._server.clients:
-                    client.Send({"action":"move","message":{"Joueur":i,"Direction":"bas"}})
-                print("down")
-            if not self.controlerCollision(MAP,formeActuelle) or self._server.forms[i].pos2[0] == 22 :
-                for client in self._server.clients:
-                    client.Send({"action":"poser","joueur":i})
-                self.collision(i)
-                self.Network_checkLigne({})
-                nbForme=random.randint(0,6)
-                dict=dictForme.DictForme()
-                formes=dict.getFormes()
-                self._server.forms[i] = forme.Forme([0,4],[len(formes[nbForme][0]),4+len(formes[nbForme][0][0])],formes[nbForme])
+            self.actionDown(formeActuelle,MAP,joueur)
 
-                for client in self._server.clients:
-                    client.Send({"action":"former","joueur":i,"forme":formes[nbForme]})
-
-        if touches[K_SPACE]:
+        if touches[K_UP]:
             formeActuelle.tourner()
             if self.controlerCollision(MAP,formeActuelle) :
-                self._server.forms[i] = formeActuelle
+                self._server.forms[joueur] = formeActuelle
                 for client in self._server.clients:
-                    client.Send({"action":"rotate","message":{"Joueur":i}})
+                    client.Send({"action":"rotate","message":{"Joueur":joueur}})
                 print("rotate")
 
 
-    def Network_checkLigne(self,data):
-        joueur=0
-        estClientActuelle=True
-        for client in self._server.clients:
-            if client==self:
-                estClientActuelle=False
-            if estClientActuelle:
-                joueur=joueur+1
+    def checkLigne(self,data):
+        joueur=self.joueurActuelle()
         MAP = self._server.getMapParJoueur(joueur);
         ligneModifie=1
         while ligneModifie!=0:
@@ -195,6 +195,14 @@ class ClientChannel(Channel):
                         MAP[k]=MAP[k-1]
         for client in self._server.clients:
                 client.Send({"action":"refreshMap","message":{"Joueur":joueur,"MAP":MAP}})
+
+    def Network_down(self,date):
+        joueur=self.joueurActuelle()
+        formeActuelle=copy.deepcopy(self._server.forms[joueur])
+        MAP = copy.deepcopy(self._server.MAPS[joueur])
+        self.actionDown(formeActuelle,MAP,joueur)
+
+
     def Network_miseAJourMap(self,data):
         #self.map=data["map"]
         pass

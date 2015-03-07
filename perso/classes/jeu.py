@@ -37,24 +37,30 @@ class Jeu() :
         clock = pygame.time.Clock()
         #pygame.key.set_repeat(1,1)
         cd = 0
+        cdDown = 0
         while True:
             clock.tick(60)
             monClient.Loop()
             if cd > 0 :
                 cd = cd -1
+            if cdDown > 0 :
+                cdDown = cdDown -1
             for event in pygame.event.get():
                 if event.type == QUIT:
                     sys.exit(0)
             keystrokes = pygame.key.get_pressed()
             if self.begin :
-                if keystrokes[K_LEFT] or keystrokes[K_SPACE] or keystrokes[K_RIGHT]:
+                if keystrokes[K_LEFT] or keystrokes[K_UP] or keystrokes[K_RIGHT]:
                     if cd == 0 :
                         monClient.keys(keystrokes)
                         cd = 10
 
                 if keystrokes[K_DOWN] :
                     monClient.keys(keystrokes)
-
+                    cdDown=30
+                if cdDown == 0 :
+                    monClient.down()
+                    cdDown=30
             self.carte.draw(self.surface)
             for g in self.groupeForm :
                 self.groupeForm[g].draw(self.surface)
