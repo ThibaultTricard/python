@@ -26,6 +26,7 @@ class Jeu() :
         self.groupeForm = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
         #formes qui ne bougent pas
         self.groupeFormStockee = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
+        self.score={0:0,1:0,2:0,3:0}
         self.begin = False
         self.carte = mapLoader.create()
         self.carte.draw(self.surface)
@@ -80,6 +81,7 @@ class Jeu() :
     def create(self,joueur,form):
         self.forms[joueur] = forme.Forme([0,4],[len(form[0]),4+len(form[0][0])],form)
         self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
+        self.score[joueur]=0
 
     def rotate(self,joueur):
         self.forms[joueur].tourner()
@@ -88,7 +90,11 @@ class Jeu() :
     def refresh(self,joueur, MAP) :
         form = forme.Forme([0,0],[21,10],{0:MAP})
         self.groupeFormStockee[joueur] = mapLoader.paint(form,joueur)
-
+        
+    def augmenterScore(self,joueur,score):
+        self.score[joueur]+=int(score)
+        print self.score
+        
     def commencer(self):
         self.begin = True
 

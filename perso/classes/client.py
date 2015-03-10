@@ -97,6 +97,9 @@ class Client(ConnectionListener):
     def down(self):
         connection.Send({'action':'down'})
 
+    def Network_augmenterScore(self,data):
+        self.jeu.augmenterScore(data["Joueur"],data["score"])
+        
     def Network_refreshMap(self,data):
         self.jeu.refresh(data['message']['Joueur'],data['message']['MAP'])
 

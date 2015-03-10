@@ -8,7 +8,7 @@ import imp
 from classes import forme
 from classes import joueur
 from classes import carte
-NB_CLIENT_NECESSAIRE=4
+NB_CLIENT_NECESSAIRE=1
 def main_prog():
     launched = False
     my_server = MyServer(localaddr = (sys.argv[1],int(sys.argv[2])))
