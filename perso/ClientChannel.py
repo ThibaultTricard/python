@@ -124,6 +124,7 @@ class ClientChannel(Channel):
             if estClientActuelle:
                 i=i+1
         return i
+    
     def actionDown(self,formeActuelle,MAP,joueur):
         formeActuelle.bas()
         if self.controlerCollision(MAP,formeActuelle) :
@@ -141,7 +142,7 @@ class ClientChannel(Channel):
             formes=dict.getFormes()
             self._server.forms[joueur] = forme.Forme([0,4],[len(formes[nbForme][0]),4+len(formes[nbForme][0][0])],formes[nbForme])
             if (self.controlerCollision(self._server.MAPS[joueur],self._server.forms[joueur])):
-                client.send({"action":"fin"})
+                client.Send({"action":"fin"})
             else :
                 for client in self._server.clients:
                     client.Send({"action":"former","joueur":joueur,"forme":formes[nbForme]})
@@ -185,6 +186,7 @@ class ClientChannel(Channel):
         joueur=self.joueurActuelle()
         MAP = self._server.getMapParJoueur(joueur);
         ligneModifie=1
+        compteurLigneModifiee=0
         while ligneModifie!=0:
             ligneModifie=0
             for i in range(len(MAP)):
@@ -194,11 +196,27 @@ class ClientChannel(Channel):
                         caseVide=True
                 if caseVide==False:
                     ligneModifie=1
+                    compteurLigneModifiee=compteurLigneModifiee+1
                     for k in range(i,1,-1):
                         MAP[k]=MAP[k-1]
         for client in self._server.clients:
                 client.Send({"action":"refreshMap","message":{"Joueur":joueur,"MAP":MAP}})
+                if compteurLigneModifiee!=0:
+                    client.Send({"action":"augmenterScore","Joueur":joueur,"score":self.calculerScore(compteurLigneModifiee)})
 
+    """
+    Retourne le score à ajouter au joueur lors de la suppression d'une ligne
+    """
+    def calculerScore(self,nbLigne):
+        if nbLigne==1:
+            return 40
+        if nbLigne==2:
+            return 100
+        if nbLigne==3:
+            return 300
+        if nbLigne==4:
+            return 1200
+        
     def Network_down(self,date):
         joueur=self.joueurActuelle()
         formeActuelle=copy.deepcopy(self._server.forms[joueur])
