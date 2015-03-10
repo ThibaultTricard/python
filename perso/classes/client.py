@@ -49,7 +49,7 @@ class Client(ConnectionListener):
         print "Desole plus de place !"
         sys.exit()
 
-    def Network_fin :
+    def Network_fin(self,data) :
         self.jeu.begin = False
 
     def Network_former(self,data):
