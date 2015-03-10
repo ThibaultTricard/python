@@ -140,9 +140,12 @@ class ClientChannel(Channel):
             dict=dictForme.DictForme()
             formes=dict.getFormes()
             self._server.forms[joueur] = forme.Forme([0,4],[len(formes[nbForme][0]),4+len(formes[nbForme][0][0])],formes[nbForme])
+            if (self.controlerCollision(self._server.MAPS[joueur],self._server.forms[joueur])):
+                client.send({"action":"fin"})
+            else :
+                for client in self._server.clients:
+                    client.Send({"action":"former","joueur":joueur,"forme":formes[nbForme]})
 
-            for client in self._server.clients:
-                client.Send({"action":"former","joueur":joueur,"forme":formes[nbForme]})
 
     def Network_keys(self,data):
         touches = data['keystrokes']
