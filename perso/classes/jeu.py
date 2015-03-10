@@ -16,6 +16,7 @@ HAUTEUR_FENETRE=int(600)
 
 class Jeu() :
     def __init__(self, ip, port, pseudo):
+        pygame.init()
         self.surface=pygame.display.set_mode((LARGEUR_FENETRE,HAUTEUR_FENETRE))
         self.ip=ip
         self.port=port
@@ -30,6 +31,7 @@ class Jeu() :
         self.begin = False
         self.carte = mapLoader.create()
         self.carte.draw(self.surface)
+        self.surface.blit(mapLoader.ecrireScore(self.pseudo,self.score[0]),(30,30))
         pygame.display.flip()
 
     def lancer(self):
@@ -92,8 +94,8 @@ class Jeu() :
         self.groupeFormStockee[joueur] = mapLoader.paint(form,joueur)
         
     def augmenterScore(self,joueur,score):
-        self.score[joueur]+=int(score)
-        print self.score
+       """ self.score[joueur]=self.score[joueur]+int(score)"""
+       self.surface.blit(mapLoader.ecrireScore(self.pseudo,score),(30,30))
         
     def commencer(self):
         self.begin = True

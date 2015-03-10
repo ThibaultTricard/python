@@ -19,3 +19,13 @@ def paint(form, joueur):
                 rect = [(j+form.pos1[1])*16+joueur*180 +50 ,(i+form.pos1[0])*16+150]
                 maForm.add(block.Block(rect,form.form[form.formActuelle][i][j]))
     return maForm
+
+"""
+Ecrit le score sous le plateau des joueurs
+"""
+def ecrireScore(pseudo,score):
+    font=pygame.font.SysFont("broadway",24,bold=False,italic=False)
+    text=font.render(pseudo+":"+str(score),1,(255,255,255))
+    return text
+        
+    
