@@ -144,7 +144,7 @@ class ClientChannel(Channel):
                 for client in self._server.clients:
                     client.Send({"action":"former","joueur":joueur,"forme":formes[nbForme]})
             else :
-                client.send({"action":"fin"})
+                client.Send({"action":"fin", 'fin':'fin'})
 
 
     def Network_keys(self,data):
@@ -241,6 +241,6 @@ class ClientChannel(Channel):
                         print "false"
                         return False
         return True
-    
+
     def getPseudo(self):
         return self.pseudo

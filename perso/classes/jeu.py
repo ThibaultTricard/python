@@ -28,7 +28,7 @@ class Jeu() :
         self.groupeForm = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
         #formes qui ne bougent pas
         self.groupeFormStockee = {0:pygame.sprite.RenderClear(),1:pygame.sprite.RenderClear(),2:pygame.sprite.RenderClear(),3:pygame.sprite.RenderClear()}
-        self.score={'0':0,'1':0,'2':0,'3':0}
+        self.score={0:0,1:0,2:0,3:0}
         self.begin = False
         self.carte = mapLoader.create()
         self.carte.draw(self.surface)
@@ -58,22 +58,23 @@ class Jeu() :
                 if keystrokes[K_LEFT] or keystrokes[K_UP] or keystrokes[K_RIGHT]:
                     if cd == 0 :
                         monClient.keys(keystrokes)
-                        cd = 10
+                        cd = 5
 
                 if keystrokes[K_DOWN] :
                     monClient.keys(keystrokes)
-                    cdDown=30
+                    cdDown=10
                 if cdDown == 0 :
                     monClient.down()
-                    cdDown=30
+                    cdDown=10
             self.carte.draw(self.surface)
             for g in self.groupeForm :
                 self.groupeForm[g].draw(self.surface)
             for g in self.groupeFormStockee :
                 self.groupeFormStockee[g].draw(self.surface)
             #affichage du score
-            for score in self.score:
-                self.surface.blit(mapLoader.ecrireScore(self.joueurs[int(score)],self.score[str(score)]),(int(str(score))*150,30))
+            for i in range(len(self.score)):
+                score = self.score[i]
+                self.surface.blit(mapLoader.ecrireScore(self.joueurs[i],self.score[i]),(50+i*180,30))
             pygame.display.flip()
 
     def move(self,joueur,direction):
@@ -89,11 +90,11 @@ class Jeu() :
         self.forms[joueur] = forme.Forme([0,4],[len(form[0]),4+len(form[0][0])],form)
         self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
         self.score[joueur]=0
-    
+
     def setPseudoJoueur(self,joueur,pseudo):
         self.joueurs[int(joueur)]=pseudo
         print "pseudo Joueur "+str(self.joueurs[int(joueur)])
-        
+
     def rotate(self,joueur):
         self.forms[joueur].tourner()
         self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
@@ -101,19 +102,19 @@ class Jeu() :
     def refresh(self,joueur, MAP) :
         form = forme.Forme([0,0],[21,10],{0:MAP})
         self.groupeFormStockee[joueur] = mapLoader.paint(form,joueur)
-        
+
     def augmenterScore(self,joueur,score):
-        self.score[str(joueur)]=self.score[str(joueur)]+int(score)
+        self.score[joueur]=self.score[joueur]+int(score)
         print "Augmenter joueur "+str(self.score[joueur])
         print "Joueur a augmenter : "+str(joueur)
-        
+
     def commencer(self):
         self.begin = True
 
     def collision(self , joueur):
         for s in self.groupeForm[joueur].sprites():
             self.groupeFormStockee[joueur].add(s)
-    
+
     def getMap(self):
         return self.MAP
 

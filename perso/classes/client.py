@@ -31,15 +31,15 @@ class Client(ConnectionListener):
 
     def Network(self, data):
         print('message de type %s recu' % data['action'])
-        
+
     ### Network event/message callbacks ###
     def Network_connected(self, data):
         print('connecte au serveur !')
         connection.Send({"action":"username","username":self.pseudo})
-        
+
     def Network_pseudo(self,data):
         self.jeu.setPseudoJoueur(data["joueur"],data["pseudo"])
-        
+
     def Network_confirmationConnexion(self,data):
         print "Confirmation connexion"
 
@@ -89,7 +89,7 @@ class Client(ConnectionListener):
 
     def setMainView(self,mainView):
         self.mainView=mainView
-        
+
     #Envoie les touches pressees au serveur
     def keys(self,data):
         connection.Send({'action':'keys','keystrokes':data})
@@ -99,7 +99,7 @@ class Client(ConnectionListener):
 
     def Network_augmenterScore(self,data):
         self.jeu.augmenterScore(data["Joueur"],data["score"])
-        
+
     def Network_refreshMap(self,data):
         self.jeu.refresh(data['message']['Joueur'],data['message']['MAP'])
 
