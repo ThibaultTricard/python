@@ -22,6 +22,7 @@ class MyServer(Server):
     def __init__(self, *args, **kwargs):
         Server.__init__(self, *args, **kwargs)
         self.clients = []
+        self.pseudos=[]
         self.MAPS= {0:copy.deepcopy(map.MAP),1:copy.deepcopy(map.MAP),2:copy.deepcopy(map.MAP),3:copy.deepcopy(map.MAP)}
         self.forms={0:FORM_VIDE,1:FORM_VIDE,2:FORM_VIDE,3:FORM_VIDE}
         print('Server launched')
@@ -39,6 +40,9 @@ class MyServer(Server):
 
     def getMapParJoueur(self,joueur):
         return self.MAPS[joueur]
+    
+    def ajouterPseudo(self,pseudo):
+        self.pseudos.append(pseudo)
 
     def launch_game(self):
         # Init Pygame
@@ -50,6 +54,9 @@ class MyServer(Server):
         dict=dictForme.DictForme()
         formes=dict.getFormes()
         for client in self.clients:
+            for i in range(0,len(self.pseudos)):
+                client.Send({"action":"pseudo","joueur":i,"pseudo":self.pseudos[i]})
+            
             client.Send({"action":"former","joueur":0,"forme":formes[nbFormeJ0]})
             client.Send({"action":"former","joueur":1,"forme":formes[nbFormeJ1]})
             client.Send({"action":"former","joueur":2,"forme":formes[nbFormeJ2]})

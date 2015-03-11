@@ -97,10 +97,9 @@ class ClientChannel(Channel):
         print('message de type %s recu' % data['action'])
 
     def Network_username(self,data):
-        print(self._server.getNbClient())
         if self._server.getNbClient()<=NB_JOUEUR_LIMITE:
             print('username recu : %s ' % data['username'])
-            self.Send({"action":"confirmationConnexion"})
+            self._server.ajouterPseudo(data['username'])
         else:
             self.Send({"action":"connexionRefusee"})
 
@@ -242,3 +241,6 @@ class ClientChannel(Channel):
                         print "false"
                         return False
         return True
+    
+    def getPseudo(self):
+        return self.pseudo

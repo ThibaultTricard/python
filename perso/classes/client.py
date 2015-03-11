@@ -24,7 +24,6 @@ class Client(ConnectionListener):
         self.Connect((host, port))
         self.pseudo = pseudo
         self.jeu=jeu
-        t=thread.start_new_thread(self.Input_loop,())
 
     def Loop(self):
         connection.Pump()
@@ -32,11 +31,17 @@ class Client(ConnectionListener):
 
     def Network(self, data):
         print('message de type %s recu' % data['action'])
-
+        
     ### Network event/message callbacks ###
     def Network_connected(self, data):
         print('connecte au serveur !')
         connection.Send({"action":"username","username":self.pseudo})
+        
+    def Network_pseudo(self,data):
+        self.jeu.setPseudoJoueur(data["joueur"],data["pseudo"])
+        
+    def Network_confirmationConnexion(self,data):
+        print "Confirmation connexion"
 
     def Network_message(self,data):
         print(data['message'])
@@ -78,18 +83,13 @@ class Client(ConnectionListener):
     def Network_ready(self,data):
         self.jeu.commencer()
 
-    def Input_loop(self):
-        while True:
-            #envoyer les commandes saisies
-            message=raw_input(">")
-            connection.Send({"action":"message","message":message})
-
     def Network_disconnected(self, data):
         print 'Server disconnected'
         sys.exit()
 
     def setMainView(self,mainView):
         self.mainView=mainView
+        
     #Envoie les touches pressees au serveur
     def keys(self,data):
         connection.Send({'action':'keys','keystrokes':data})
