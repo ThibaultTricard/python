@@ -27,5 +27,3 @@ def ecrireScore(pseudo,score):
     font=pygame.font.SysFont("broadway",24,bold=False,italic=False)
     text=font.render(pseudo+":"+str(score),1,(255,255,255))
     return text
-        
-    
