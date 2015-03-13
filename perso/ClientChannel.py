@@ -60,19 +60,28 @@ class ClientChannel(Channel):
                 client.Send({"action":"move","message":{"Joueur":joueur,"Direction":"bas"}})
         #si il y a collision ou si la forme touche en bas
         if not self.controlerCollision(MAP,formeActuelle) or self._server.forms[joueur].pos2[0] == 22 :
-            #on dit a tous les client qu'un joueur a posé une forme
+            #on dit à tous les client qu'un joueur a posé une forme
             for client in self._server.clients:
                 client.Send({"action":"poser","joueur":joueur})
+            #on tranfert la forme du joueur vers sa map
             self.collision(joueur)
+
+            #on s'occupe des eventuelles lignes
             self.checkLigne({})
+
+            #on crée une nouvelle forme
             nbForme=random.randint(0,6)
             dict=dictForme.DictForme()
             formes=dict.getFormes()
             self._server.forms[joueur] = forme.Forme([0,4],[len(formes[nbForme][0]),4+len(formes[nbForme][0][0])],formes[nbForme])
+
+            #on controlle si il y a une collision entre la nouvelle forme et les blocks
             if (self.controlerCollision(self._server.MAPS[joueur],self._server.forms[joueur])):
+                #si il n'y a pas de collision on envoie la forme à tous les clients
                 for client in self._server.clients:
                     client.Send({"action":"former","joueur":joueur,"forme":formes[nbForme]})
             else :
+                #sinon on signale a client concerné qu'il a perdu
                 self.Send({"action":"fin", 'fin':'fin'})
 
 
