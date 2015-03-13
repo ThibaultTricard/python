@@ -22,6 +22,7 @@ class ClientChannel(Channel):
     def Network(self,data):
         print('message de type %s recu' % data['action'])
 
+    #Ajoute le pseudo du client Chanel
     def Network_username(self,data):
         if self._server.getNbClient()<=NB_JOUEUR_LIMITE:
             print('username recu : %s ' % data['username'])
@@ -29,10 +30,6 @@ class ClientChannel(Channel):
         else:
             self.Send({"action":"connexionRefusee"})
 
-    def Network_rafraichir(self,data):
-        i=0
-        #for client in self._server.clients:
-            #client.Send({"action":"rafraichir","map":self.map,"joueur":i})
 
     def Network_message(self,data):
         print data['message']
@@ -40,6 +37,7 @@ class ClientChannel(Channel):
             if client!=self:
                 client.Send({"action":"message","message":data['message']})
 
+    #On recupere le joueur actuelle
     def joueurActuelle(self):
         estClientActuelle=True
         i=0
@@ -84,7 +82,7 @@ class ClientChannel(Channel):
                 #sinon on signale a client concerné qu'il a perdu
                 self.Send({"action":"fin", 'fin':'fin'})
 
-
+    #Gere les touches clavier envoyé
     def Network_keys(self,data):
         touches = data['keystrokes']
         joueur=self.joueurActuelle()
@@ -160,16 +158,12 @@ class ClientChannel(Channel):
         if nbLigne==4:
             return 1200
 
+    #on fait descendre la forme
     def Network_down(self,date):
         joueur=self.joueurActuelle()
         formeActuelle=copy.deepcopy(self._server.forms[joueur])
         MAP = copy.deepcopy(self._server.MAPS[joueur])
         self.actionDown(formeActuelle,MAP,joueur)
-
-
-    def Network_miseAJourMap(self,data):
-        #self.map=data["map"]
-        pass
 
     #on verifie les collision entre la map et le joueur en utilisant une superposition
     def collision(self, joueur):
@@ -178,7 +172,7 @@ class ClientChannel(Channel):
                 if  self._server.forms[joueur].form[self._server.forms[joueur].formActuelle][i][j] >= 1 :
                     self._server.MAPS[joueur][i + self._server.forms[joueur].pos1[0] ][j + self._server.forms[joueur].pos1[1]] = self._server.forms[joueur].form[self._server.forms[joueur].formActuelle][i][j]
 
-    #on verifie les collision entre la map et le joueur en utilisant une superposition
+    #on verifie les collision entre la map et la forme active en utilisant une superposition
     def controlerCollision(self, MAP,forme) :
         for i in range(len(forme.form[forme.formActuelle])) :
             for j in range(len(forme.form[forme.formActuelle][i])):
