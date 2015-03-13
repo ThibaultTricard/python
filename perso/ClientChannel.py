@@ -8,7 +8,7 @@ import random
 from classes import dictForme
 from classes import forme
 
-NB_JOUEUR_LIMITE=2
+NB_JOUEUR_LIMITE=4
 
 #Héritage de la classe Channel
 #La classe Channel a un attribut _server
