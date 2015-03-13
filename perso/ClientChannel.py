@@ -58,7 +58,7 @@ class ClientChannel(Channel):
                 client.Send({"action":"move","message":{"Joueur":joueur,"Direction":"bas"}})
         #si il y a collision ou si la forme touche en bas
         if not self.controlerCollision(MAP,formeActuelle) or self._server.forms[joueur].pos2[0] == 22 :
-            #on dit à tous les client qu'un joueur a posé une forme
+            #on dit à tous les clients qu'un joueur a posé une forme
             for client in self._server.clients:
                 client.Send({"action":"poser","joueur":joueur})
             #on tranfert la forme du joueur vers sa map
@@ -73,31 +73,31 @@ class ClientChannel(Channel):
             formes=dict.getFormes()
             self._server.forms[joueur] = forme.Forme([0,4],[len(formes[nbForme][0]),4+len(formes[nbForme][0][0])],formes[nbForme])
 
-            #on controlle si il y a une collision entre la nouvelle forme et les blocks
+            #on controle si il y a une collision entre la nouvelle forme et les blocks
             if (self.controlerCollision(self._server.MAPS[joueur],self._server.forms[joueur])):
                 #si il n'y a pas de collision on envoie la forme à tous les clients
                 for client in self._server.clients:
                     client.Send({"action":"former","joueur":joueur,"forme":formes[nbForme]})
             else :
-                #sinon on signale a client concerné qu'il a perdu
+                #sinon on signale au client concerné qu'il a perdu
                 self.Send({"action":"fin", 'fin':'fin'})
 
-    #Gere les touches clavier envoyé
+    #Gère les touches claviers envoyées
     def Network_keys(self,data):
         touches = data['keystrokes']
         joueur=self.joueurActuelle()
         #on copie la frome du joueur
         formeActuelle = copy.deepcopy(self._server.forms[joueur])
         MAP = copy.deepcopy(self._server.MAPS[joueur])
-        #on regarde quel touche a été appuyée
+        #on regarde quelle touche a été appuyée
         if touches[K_LEFT]:
             #on fait bouger la copie de la forme
             formeActuelle.gauche()
             #on controlle les collisions sur la copie
             if self.controlerCollision(MAP,formeActuelle) :
-                #si il n'y a pas de collions on reporte l'action effectuée sur la vrai forme
+                #si il n'y a pas de collions on reporte l'action effectuée sur la vraie forme
                 self._server.forms[joueur] = formeActuelle
-                #on informe les client du mouvement effectué
+                #on informe les clients du mouvement effectué
                 for client in self._server.clients:
                     client.Send({"action":"move","message":{"Joueur":joueur,"Direction":"gauche"}})
         if touches[K_RIGHT]:
@@ -119,9 +119,9 @@ class ClientChannel(Channel):
                 for client in self._server.clients:
                     client.Send({"action":"rotate","message":{"Joueur":joueur}})
 
-    #Methode qui verrifie si des lignes ont été faites
+    #Methode qui verifie si des lignes ont été faites
     #on parcours les lignes pour trouver les lignes
-    #si il y a des ligne on décalle les ligne supérieur vers les bas
+    #si il y a des ligne on décalle les lignes supérieures vers les bas
     def checkLigne(self,data):
         joueur=self.joueurActuelle()
         MAP = self._server.getMapParJoueur(joueur);
@@ -139,7 +139,7 @@ class ClientChannel(Channel):
                     compteurLigneModifiee=compteurLigneModifiee+1
                     for k in range(i,1,-1):
                         MAP[k]=MAP[k-1]
-        #on informe les client de la nouvelle carte
+        #on informe les clients de la nouvelle carte
         for client in self._server.clients:
                 client.Send({"action":"refreshMap","message":{"Joueur":joueur,"MAP":MAP}})
                 if compteurLigneModifiee!=0:
@@ -165,14 +165,14 @@ class ClientChannel(Channel):
         MAP = copy.deepcopy(self._server.MAPS[joueur])
         self.actionDown(formeActuelle,MAP,joueur)
 
-    #on verifie les collision entre la map et le joueur en utilisant une superposition
+    #on verifie les collisions entre la map et le joueur en utilisant une superposition
     def collision(self, joueur):
         for i in range(len(self._server.forms[joueur].form[self._server.forms[joueur].formActuelle])) :
             for j in range(len(self._server.forms[joueur].form[self._server.forms[joueur].formActuelle][i])):
                 if  self._server.forms[joueur].form[self._server.forms[joueur].formActuelle][i][j] >= 1 :
                     self._server.MAPS[joueur][i + self._server.forms[joueur].pos1[0] ][j + self._server.forms[joueur].pos1[1]] = self._server.forms[joueur].form[self._server.forms[joueur].formActuelle][i][j]
 
-    #on verifie les collision entre la map et la forme active en utilisant une superposition
+    #on verifie les collisions entre la map et la forme active en utilisant une superposition
     def controlerCollision(self, MAP,forme) :
         for i in range(len(forme.form[forme.formActuelle])) :
             for j in range(len(forme.form[forme.formActuelle][i])):

@@ -5,7 +5,7 @@ class Block(pygame.sprite.Sprite):
 
     def __init__(self, rect, num):
         pygame.sprite.Sprite.__init__(self)
-        #en fonction du numéro passé en paramètre on choisi l'image du block a afficher
+        #en fonction du numéro passé en paramètre on choisit l'image du block à afficher
         if num == 0:
             self.image = pygame.image.load('image/empty.png')
         if num == 1 :
@@ -30,7 +30,7 @@ class Block(pygame.sprite.Sprite):
         self.rect.y = rect[1]
         self.speed = [0,0]
 
-    #fonctiron pour changer la couleur du block
+    #fonction pour changer la couleur du block
     def changerImage(self,color):
         self.image = pygame.image.load('image/'+color+'.png')
         self.image = pygame.transform.scale(self.image, (int(16), int(16)))

@@ -76,13 +76,13 @@ class Jeu() :
                     cdDown=10
             #on dessine la carte
             self.carte.draw(self.surface)
-            #on dessine les forme
+            #on dessine les formes
             for g in self.groupeForm :
                 self.groupeForm[g].draw(self.surface)
-            #on dessine les forme qui son déjà tombé
+            #on dessine les formes qui sont déjà tombées
             for g in self.groupeFormStockee :
                 self.groupeFormStockee[g].draw(self.surface)
-            #on ecrie les scores
+            #on ecrit les scores
             for i in [0,1,2,3]:
                 self.surface.blit(mapLoader.ecrireScore(self.joueurs[i],str(self.score[str(i)])),(50+i*180,30))
             pygame.display.flip()
@@ -97,7 +97,7 @@ class Jeu() :
             self.forms[joueur].droite()
         self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
 
-    #on crée un frome pour un joueur
+    #on crée une forme pour un joueur
     def create(self,joueur,form):
         self.forms[joueur] = forme.Forme([0,4],[len(form[0]),4+len(form[0][0])],form)
         self.groupeForm[joueur] = mapLoader.paint(self.forms[joueur],joueur)
@@ -128,7 +128,7 @@ class Jeu() :
     def commencer(self):
         self.begin = True
 
-    #indique au jeu qu'un joueur a eu une collision et met ses block dans le groupe
+    #indique au jeu qu'un joueur a eu une collision et met ses blocks dans le groupe
     #de block immobile
     def collision(self , joueur):
         for s in self.groupeForm[joueur].sprites():
