@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from classes import block
 
+#on crée les plateaus de jeux
 def create() :
     maMap = pygame.sprite.RenderClear()
     for k in range(4) :
@@ -11,8 +12,11 @@ def create() :
                 maMap.add(block.Block(rect,0))
     return maMap
 
+#on crée un group de sprite sur la map d'un joueur
 def paint(form, joueur):
+    #on crée le groupe de spoite
     maForm = pygame.sprite.RenderClear()
+    #on remplis le groupe grâce aux informations passer dans la forme
     for i in range(len(form.form[form.formActuelle])):
         for j in range(len(form.form[form.formActuelle][i])):
             if form.form[form.formActuelle][i][j] >=1 :

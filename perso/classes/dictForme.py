@@ -1,6 +1,6 @@
 class DictForme(object):
     """
-    Class to wrap a python dictionary.
+    On wrap le dictionnaire de fomre
     """
     def __init__(self):
         self.formes={0 : {0 : { 0 : [1], #Block_Ligne

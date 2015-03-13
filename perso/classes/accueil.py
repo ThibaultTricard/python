@@ -25,31 +25,32 @@ class Accueil():
             time.sleep(1)
             fenetre.quit()
 
-
+        #on cree une fenêtre
         fenetre = tk.Tk()
+        #on donne un titre a la fenêtre
         fenetre.title("Tetris")
+        #on donne une taille et une position
         fenetre.geometry("500x500+0+0")
+        #on creer un titre
         titre_principal = tk.Label(fenetre, text="Tetris Connexion")
-        espace = tk.Label(fenetre, text="")
-
-        # l'objet Label() nomm? texte est ensuite
-        # rendu visible dans fenetre gr?ce ? pack()
-        espace.pack()
+        #on affiche ce titre
         titre_principal.pack()
 
-        # pour finir, on lance la boucle programme
+        espace = tk.Label(fenetre, text="")
+        espace.pack()
+
 
         adresse_label = tk.Label(fenetre, text='Adresse du serveur :', width=20, height=3, fg="navy")
         adresse_label.pack()
-        adresse_input = tk.StringVar()  # definition d'une variable-chaine pour recevoir la saisie d'un texte
-        adresse_input.set("127.0.0.1")  # facultatif: assigne une valeur ? la variable
+        adresse_input = tk.StringVar()
+        adresse_input.set("127.0.0.1")  # on assigne une valeur de base au chanp
 
         saisie_default = tk.Entry(textvariable=adresse_input, width=30)
         saisie_default.pack()
 
         port_label = tk.Label(fenetre, text='Port du serveur :', width=20, height=3, fg="navy")
         port_label.pack()
-        port_serveur = tk.StringVar()  # definition d'une variable-chaine pour recevoir la saisie d'un texte
+        port_serveur = tk.StringVar()
         port_serveur.set("8888")  # facultatif: assigne une valeur ? la variable
         saisie_port = tk.Entry(textvariable=port_serveur, width=30)
         saisie_port.pack()
@@ -61,10 +62,13 @@ class Accueil():
         saisie_peusdo = tk.Entry(textvariable=pseudo_input, width=30)
         saisie_peusdo.pack()
 
+        #on creer un boutton valider avec un fonction a executer au clic
         b = Button(fenetre, text="Connexion", command=donnee)
         espace.pack()
+        #on afficher
         b.pack()
 
+        #on lance la boucle du programme
         fenetre.mainloop()
 
         fenetre.destroy()

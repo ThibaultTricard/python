@@ -4,9 +4,6 @@
 import sys
 from PodSixNet.Connection import connection, ConnectionListener
 import thread
-# This example uses Python threads to manage async input from sys.stdin.
-# This is so that I can receive input from the console whilst running the server.
-# Don't ever do this - it's slow and ugly. (I'm doing it for simplicity's sake)
 
 class bcolors():
     HEADER = '\033[95m'
