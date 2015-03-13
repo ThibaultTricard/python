@@ -49,15 +49,18 @@ class ClientChannel(Channel):
             if estClientActuelle:
                 i=i+1
         return i
-
+    #fait descendre la forme d'un joueur
     def actionDown(self,formeActuelle,MAP,joueur):
+        #on fait decendre la forme
         formeActuelle.bas()
+        #on verifie si il y a une collision
         if self.controlerCollision(MAP,formeActuelle) :
             self._server.forms[joueur] = formeActuelle
             for client in self._server.clients:
                 client.Send({"action":"move","message":{"Joueur":joueur,"Direction":"bas"}})
-            print("down")
+        #si il y a collision ou si la forme touche en bas
         if not self.controlerCollision(MAP,formeActuelle) or self._server.forms[joueur].pos2[0] == 22 :
+            #on dit a tous les client qu'un joueur a posé une forme
             for client in self._server.clients:
                 client.Send({"action":"poser","joueur":joueur})
             self.collision(joueur)

@@ -13,6 +13,7 @@ def main_prog():
     launched = False
     my_server = MyServer(localaddr = (sys.argv[1],int(sys.argv[2])))
     while launched==False:
+        #quand tout le monde est là on envoie un message a tout le monde
         if len(my_server.pseudos)==NB_CLIENT_NECESSAIRE and launched==False:
             for client in my_server.clients:
                 client.Send({"action":"ready"})
