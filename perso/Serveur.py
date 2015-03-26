@@ -30,10 +30,16 @@ class MyServer(Server):
         self.MAPS= {0:copy.deepcopy(map.MAP),1:copy.deepcopy(map.MAP),2:copy.deepcopy(map.MAP),3:copy.deepcopy(map.MAP)}
         #on crée un tableau de form avec des formes vides
         self.forms={0:copy.deepcopy(FORM_VIDE),1:copy.deepcopy(FORM_VIDE),2:copy.deepcopy(FORM_VIDE),3:copy.deepcopy(FORM_VIDE)}
+        #on crée un tableau pour savoir les joueurs actifs
+        self.joueurActifs= []
+        #On crée un tableau pour savoir le score des joueurs
+        self.scores=[]
         print('Server launched')
 
     def Connected(self, channel, addr):
         print('New connection')
+        self.joueurActifs.append(1)
+        self.scores.append(0)
         self.clients.append(channel)
 
     def del_client(self,channel):

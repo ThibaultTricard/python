@@ -56,7 +56,8 @@ class Client(ConnectionListener):
 
     #Gere la fin du jeu
     def Network_fin(self,data) :
-        self.jeu.begin = False
+        self.jeu.gagnant=data['gagnant']
+        self.jeu.end = True
 
     #A la demande du serveur creer une forme pour un joueur
     def Network_former(self,data):

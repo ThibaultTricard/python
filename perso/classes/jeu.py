@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# coding: utf-8
 import sys
 import time
 from classes import client
@@ -32,6 +34,8 @@ class Jeu() :
         self.score={'0':0,'1':0,'2':0,'3':0}
         #on laisse la variable begin a False
         self.begin = False
+        self.end = False
+        self.gagnant = ""
         self.carte = mapLoader.create()
         self.carte.draw(self.surface)
         pygame.display.flip()
@@ -49,17 +53,10 @@ class Jeu() :
             monClient.Loop()
             #on dessine la carte sur le jeu
             self.carte.draw(self.surface)
-            #on fait dimminuer les couldown
-            if cd > 0 :
-                cd = cd -1
-            if cdDown > 0 :
-                cdDown = cdDown -1
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    sys.exit(0)
+
             keystrokes = pygame.key.get_pressed()
             #on ne prend pas en compte les input tant que le jeu n'est pas commencé
-            if self.begin :
+            if self.begin and not self.end:
                 if keystrokes[K_LEFT] or keystrokes[K_UP] or keystrokes[K_RIGHT]:
                     if cd == 0 :
                         #on envoi le tableau de touche au serveur
@@ -74,9 +71,22 @@ class Jeu() :
 
                     monClient.down()
                     cdDown=10
+                #on fait diminuer les couldown
+                if cd > 0 :
+                    cd = cd -1
+                if cdDown > 0 :
+                    cdDown = cdDown -1
+                for event in pygame.event.get():
+                    if event.type == QUIT:
+                        sys.exit(0)
             #on dessine la carte
             self.carte.draw(self.surface)
             #on dessine les formes
+            if not self.begin :
+                self.surface.blit(mapLoader.ecrireMessageAcceuil(),(125,100))
+            if self.end:
+                self.surface.blit(mapLoader.ecrireMessageFin(self.gagnant),(50,100))
+
             for g in self.groupeForm :
                 self.groupeForm[g].draw(self.surface)
             #on dessine les formes qui sont déjà tombées

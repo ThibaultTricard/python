@@ -8,7 +8,7 @@ import random
 from classes import dictForme
 from classes import forme
 
-NB_JOUEUR_LIMITE=4
+NB_JOUEUR_LIMITE=2
 
 #Héritage de la classe Channel
 #La classe Channel a un attribut _server
@@ -80,7 +80,13 @@ class ClientChannel(Channel):
                     client.Send({"action":"former","joueur":joueur,"forme":formes[nbForme]})
             else :
                 #sinon on signale au client concerné qu'il a perdu
-                self.Send({"action":"fin", 'fin':'fin'})
+                self._server.joueurActifs[joueur]=0
+                if self.finDuJeu():
+                    for client in self._server.clients:
+                        client.Send({"action":"fin", 'fin':'fin','gagnant':self.gagnant()})
+                else:
+                    self.Send({"action":"fin", 'fin':'fin','gagnant':""})
+
 
     #Gère les touches claviers envoyées
     def Network_keys(self,data):
@@ -143,7 +149,9 @@ class ClientChannel(Channel):
         for client in self._server.clients:
                 client.Send({"action":"refreshMap","message":{"Joueur":joueur,"MAP":MAP}})
                 if compteurLigneModifiee!=0:
-                    client.Send({"action":"augmenterScore","Joueur":joueur,"score":self.calculerScore(compteurLigneModifiee)})
+                    score=self.calculerScore(compteurLigneModifiee)
+                    self._server.scores[joueur] = self._server.scores[joueur]+score
+                    client.Send({"action":"augmenterScore","Joueur":joueur,"score":score})
 
     """
     Retourne le score à ajouter au joueur lors de la suppression d'une ligne
@@ -183,3 +191,18 @@ class ClientChannel(Channel):
 
     def getPseudo(self):
         return self.pseudo
+
+    def finDuJeu(self):
+        fin=True
+        for i in range(0,NB_JOUEUR_LIMITE):
+            if self._server.joueurActifs[i]!=0:
+                fin=False
+        return fin
+    def gagnant(self):
+        score=-1
+        gagant=""
+        for i in range(0,NB_JOUEUR_LIMITE):
+            if self._server.scores[i]>score:
+                score=self._server.scores[i]
+                gagnant=self._server.pseudos[i]
+        return gagnant
